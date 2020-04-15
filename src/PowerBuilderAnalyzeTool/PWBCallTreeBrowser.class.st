@@ -109,7 +109,7 @@ PWBCallTreeBrowser >> initializeToolBar [
 				openWithSpec ].
 	uselessFunctionButton := self newButton
 		label: 'Browse obsolete Function';
-		help: 'Browser non used function.';
+		help: 'Browse non used function.';
 		action: [ PWBNonUsedFunctionBrowser lunchOn: model selected ];
 		iconName: #glamorousExample;
 		yourself.
