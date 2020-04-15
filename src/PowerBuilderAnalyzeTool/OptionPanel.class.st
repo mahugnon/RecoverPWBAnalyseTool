@@ -13,7 +13,7 @@ Class {
 		'possibleEntitiesPresenter',
 		'typesPresenter'
 	],
-	#category : #'PowerBuilderAnalyzeTool-Utils-CallTreeOptions'
+	#category : #'PowerBuilderAnalyzeTool-Core'
 }
 
 { #category : #specs }
