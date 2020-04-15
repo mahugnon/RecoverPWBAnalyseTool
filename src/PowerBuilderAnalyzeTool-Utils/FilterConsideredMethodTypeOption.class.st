@@ -8,3 +8,8 @@ Class {
 FilterConsideredMethodTypeOption class >> optionName [
 	^ 'Filter by methods type'
 ]
+
+{ #category : #'target resize' }
+FilterConsideredMethodTypeOption >> applyOn: aBrowser [
+	aBrowser filterConsideredMethodTypeAction
+]
