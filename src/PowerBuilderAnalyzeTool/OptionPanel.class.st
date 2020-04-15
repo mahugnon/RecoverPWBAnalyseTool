@@ -13,8 +13,22 @@ Class {
 		'possibleEntitiesPresenter',
 		'typesPresenter'
 	],
+	#classVars : [
+		'uniqueInstance'
+	],
 	#category : #'PowerBuilderAnalyzeTool-Core'
 }
+
+{ #category : #'as yet unclassified' }
+OptionPanel class >> browser: aBrower possibleEntities: aCollection1 updateTypesPresenter: aCollection2 [
+	uniqueInstance hasWindow
+		ifTrue: [ uniqueInstance window close ].
+	uniqueInstance
+		browser: aBrower
+		possibleEntities: aCollection1
+		updateTypesPresenter: aCollection2.
+	uniqueInstance openWithSpec
+]
 
 { #category : #specs }
 OptionPanel class >> defaultSpec [
@@ -41,6 +55,11 @@ OptionPanel class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #'class initialization' }
+OptionPanel class >> initialize [
+	uniqueInstance := self new
+]
+
 { #category : #examples }
 OptionPanel class >> runMe [
 	<script>
@@ -50,6 +69,14 @@ OptionPanel class >> runMe [
 { #category : #accessing }
 OptionPanel >> browser: aPWBBrowser [
 	browser := aPWBBrowser
+]
+
+{ #category : #'as yet unclassified' }
+OptionPanel >> browser: aBrowser possibleEntities: aCollection1 updateTypesPresenter: aCollection2 [
+	self
+		browser: aBrowser;
+		possibleEntities: aCollection1;
+		updateTypesPresenter: aCollection2
 ]
 
 { #category : #initialization }

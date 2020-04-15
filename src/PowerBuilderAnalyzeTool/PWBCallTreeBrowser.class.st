@@ -6,7 +6,8 @@ Class {
 		'uselessFunctionButton',
 		'browseDuplicationButton',
 		'obsoleteVarButton',
-		'optionPanel'
+		'optionPanel',
+		'optionPanelCurrentWindow'
 	],
 	#category : #'PowerBuilderAnalyzeTool-Browsers'
 }
@@ -88,15 +89,7 @@ PWBCallTreeBrowser >> initializePresenters [
 	self initializeBrowserModel.
 	self initializeRoassal.
 	self initializeToolBar.
-	optionPanel := self newButton.
-	optionPanel
-		label: 'Options';
-		icon: PWBBrowserIcons option;
-		action: [ OptionPanel new
-				browser: self;
-				possibleEntities: model selectedMethodsInvocationsSendersParents;
-				updateTypesPresenter: model selectedMethodsInvocationsSendersTypes;
-				openWithSpec ]
+
 ]
 
 { #category : #initialization }
@@ -124,7 +117,15 @@ PWBCallTreeBrowser >> initializeToolBar [
 		label: 'Browse duplication';
 		help: 'Browse duplication between functions.';
 		icon: PWBBrowserIcons duplicationIcon;
-		action: [ PWBDuplicationBrowser lunchOn: model selected ]
+		action: [ PWBDuplicationBrowser lunchOn: model selected ].
+	optionPanel := self newButton.
+	optionPanel
+		label: 'Options';
+		icon: PWBBrowserIcons option;
+		action: [ OptionPanel
+				browser: self
+				possibleEntities: model selectedMethodsInvocationsSendersParents
+				updateTypesPresenter: model selectedMethodsInvocationsSendersTypes ]
 ]
 
 { #category : #initialization }
@@ -146,7 +147,7 @@ PWBCallTreeBrowser >> selected: aFamixPWBUserObject [
 
 { #category : #accessing }
 PWBCallTreeBrowser >> title [
-^'Izy view'
+^'PWBObject Invocations Tree Browser'
 ]
 
 { #category : #api }
