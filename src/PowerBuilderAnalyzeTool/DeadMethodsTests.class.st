@@ -100,3 +100,15 @@ DeadMethodsTests >> testQueryInitDeathState [
 		assert: (testModel allMethods collectAsSet: #isPWBDead) anyOne
 		equals: false
 ]
+
+{ #category : #tests }
+DeadMethodsTests >> test_testObject1_has_4_deadMethods [
+	testModel resurrectMethods.
+	self
+		assertCollection: testUserObject1 deadMethods
+		hasSameElements:
+			{testFunction2.
+			testFunction3.
+			testFunction5.
+			testFunction10}
+]
