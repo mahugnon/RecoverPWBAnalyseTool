@@ -25,9 +25,9 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 				package: 'PowerBuilderAnalyzeTool'
 					with: [ spec
 						requires:
-							#('PowerBuilderParser' 'Roassal3' 'PowerBuilderAnalyzeTool-DuplicationGUI' 'PowerBuilderAnalyzeTool-CallTree' 'ColorsExtensions') ] ];
-		package: 'PowerBuilderAnalyzeTool-Tests'
-			with: [ spec requires: #(PowerBuilderAnalyzeTool) ]
+							#('PowerBuilderParser' 'Roassal3' 'PowerBuilderAnalyzeTool-DuplicationGUI' 'PowerBuilderAnalyzeTool-CallTree' 'ColorsExtensions') ] ].
+		"package: 'PowerBuilderAnalyzeTool-Tests'
+			with: [ spec requires: #(PowerBuilderAnalyzeTool) ]"
 ]
 
 { #category : #baselines }
