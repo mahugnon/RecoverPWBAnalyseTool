@@ -94,7 +94,7 @@ DuplicationBrowserModel >> focusClonedFragment [
 { #category : #initialization }
 DuplicationBrowserModel >> initialize [
 	super initialize.
-	pwbMooseModel := FamixPWBFunction new content: #().
+	pwbMooseModel := #().
 	duplicationFragments := OrderedCollection new.
 	colorMap := OrderedDictionary new.
 	selectedFragmentLocation := DPFragmentLocation new.

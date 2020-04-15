@@ -57,7 +57,8 @@ PWBCallTreeBrowser class >> run [
 { #category : #visiting }
 PWBCallTreeBrowser >> accept: anEntity [
 	^ ({DPFragmentLocation.
-	FAMIXTypeGroup} includes: anEntity class) not
+	FAMIXTypeGroup.
+	FamixPWBFunction} includes: anEntity class) not
 ]
 
 { #category : #api }
