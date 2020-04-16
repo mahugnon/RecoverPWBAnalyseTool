@@ -69,13 +69,14 @@ CIMUserObjectReferencesPresenter >> buildPopupOn: aCanvas [
 												<< ' -> ';
 												<< key name;
 												<< '( '.
-											1 to: args - 1 do: [ :arg | 
-												stream
-													<< arg name;
-													<< ', ' ].
+											args
+												ifNotEmpty: [ 1 to: args size - 1 do: [ :iter | 
+														stream
+															<< (args at: iter) name;
+															<< ', ' ].
+													stream << args last name ].
 											stream
-												<< args last name;
-												<< ')';
+												<< ' )';
 												cr ] ] ]).
 			aRSEdge @ (RSPopup text: text) ]
 ]
