@@ -30,7 +30,9 @@ PWBDeadMethodsBrowser >> followAction [
 	(self needUpdate: toSelect)
 		ifFalse: [ ^ self ].
 	model selected: toSelect.
-	deadMethodPresenter items: model pwbMooseModel
+	deadMethodPresenter
+		headerTitle: model selected name;
+		items: model pwbMooseModel
 ]
 
 { #category : #actions }

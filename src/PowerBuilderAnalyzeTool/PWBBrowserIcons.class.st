@@ -229,7 +229,7 @@ Kx4+4q9xwBRgPrY/T/yJAFwDbk8W8SlPkcb/AIwdIVzB9ldAAAAAAElFTkSuQmCC'
 
 { #category : #api }
 PWBBrowserIcons class >> logoHeight [
-	^ self callTreeLogo height
+	^ self duplicationLogo  height
 ]
 
 { #category : #PowerBuilderAnalyzeTool }
