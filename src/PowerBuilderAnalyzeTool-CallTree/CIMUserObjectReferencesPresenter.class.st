@@ -60,12 +60,22 @@ CIMUserObjectReferencesPresenter >> buildPopupOn: aCanvas [
 						streamContents: [ :stream | 
 							names
 								keysAndValuesDo: [ :key :value | 
+									| args |
+									args := QueryArguments runOn: key.
 									value
 										do: [ :aMethod | 
 											stream
 												<< aMethod name;
 												<< ' -> ';
 												<< key name;
+												<< '( '.
+											1 to: args - 1 do: [ :arg | 
+												stream
+													<< arg name;
+													<< ', ' ].
+											stream
+												<< args last name;
+												<< ')';
 												cr ] ] ]).
 			aRSEdge @ (RSPopup text: text) ]
 ]

@@ -25,7 +25,7 @@ PWBMooseEntityTests >> testIncomingInvocationsSenders [
 PWBMooseEntityTests >> testQueryDeadArguments [
 	self
 		assertCollection:
-			(QueryDeadArguments
+			(QueryArguments
 				runOn:
 					{testLocalVar3.
 					testArg1})

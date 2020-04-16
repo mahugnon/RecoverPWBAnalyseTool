@@ -54,6 +54,12 @@ PWBDeadMethodsBrowser >> initializePresenters [
 		items: #()
 ]
 
+{ #category : #initialization }
+PWBDeadMethodsBrowser >> initializeWindow: aWindowPresenter [ 
+super initializeWindow: aWindowPresenter .
+aWindowPresenter 	initialExtent: 350 @ 300
+]
+
 { #category : #TOREMOVE }
 PWBDeadMethodsBrowser >> title [
 ^'Dead Methods Browser'
