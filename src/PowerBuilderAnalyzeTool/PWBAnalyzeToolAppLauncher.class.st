@@ -11,39 +11,73 @@ Class {
 		'sourceTextBrowser',
 		'sourceTextBrowserLabel',
 		'logBrowser',
-		'logBrowserLabel'
+		'logBrowserLabel',
+		'deadMethodBrowser',
+		'deadMethodBrowserLabel'
 	],
 	#category : #'PowerBuilderAnalyzeTool-Core'
 }
 
 { #category : #specs }
+PWBAnalyzeToolAppLauncher class >> browserIconConstraint [
+	^ [ :constraints | 
+	constraints
+		height: PWBBrowserIcons logoHeight;
+		expand: false ]
+]
+
+{ #category : #specs }
+PWBAnalyzeToolAppLauncher class >> browserIconWithLabelConstraint [
+	^ [ :constraints | 
+	constraints
+		height: PWBBrowserIcons logoHeight + self labelHeight;
+		expand: false ]
+]
+
+{ #category : #specs }
 PWBAnalyzeToolAppLauncher class >> defaultSpec [
 	^ SpBoxLayout newHorizontal
+		spacing: 10;
 		add:
 			(SpBoxLayout newVertical
-				add: #duplicationBrowserLabel;
-				add: #mooseModelBrowser;
-				yourself);
+				add: #mooseModelBrowserLabel expand: false;
+				add: #mooseModelBrowser
+					withConstraints: self browserIconConstraint;
+				yourself)
+			withConstraints: self browserIconWithLabelConstraint;
 		add:
 			(SpBoxLayout newVertical
-				add: #duplicationBrowserLabel;
-				add: #duplicationBrowser;
-				yourself);
+				add: #deadMethodBrowserLabel expand: false;
+				add: #deadMethodBrowser
+					withConstraints: self browserIconConstraint;
+				yourself)
+			withConstraints: self browserIconWithLabelConstraint;
 		add:
 			(SpBoxLayout newVertical
-				add: #callTreeBrowserLabel;
-				add: #callTreeBrowser;
-				yourself);
+				add: #duplicationBrowserLabel expand: false;
+				add: #duplicationBrowser
+					withConstraints: self browserIconConstraint;
+				yourself)
+			withConstraints: self browserIconWithLabelConstraint;
 		add:
 			(SpBoxLayout newVertical
-				add: #sourceTextBrowserLabel;
-				add: #sourceTextBrowser;
-				yourself);
+				add: #callTreeBrowserLabel expand: false;
+				add: #callTreeBrowser withConstraints: self browserIconConstraint;
+				yourself)
+			withConstraints: self browserIconWithLabelConstraint;
 		add:
 			(SpBoxLayout newVertical
-				add: #logBrowserLabel;
-				add: #logBrowser;
-				yourself);
+				add: #sourceTextBrowserLabel expand: false;
+				add: #sourceTextBrowser
+					withConstraints: self browserIconConstraint;
+				yourself)
+			withConstraints: self browserIconWithLabelConstraint;
+		add:
+			(SpBoxLayout newVertical
+				add: #logBrowserLabel expand: false;
+				add: #logBrowser withConstraints: self browserIconConstraint;
+				yourself)
+			withConstraints: self browserIconWithLabelConstraint;
 		yourself
 ]
 
@@ -71,7 +105,16 @@ PWBAnalyzeToolAppLauncher >> initializeCallTreeBrowserLuncher [
 		icon: PWBBrowserIcons callTreeLogo;
 		action: [ PWBCallTreeBrowser run ];
 		help: 'Open the call graph browser'.
-	callTreeBrowserLabel := self newLabel label: 'Call Graph Browser'
+	callTreeBrowserLabel := self newLabel label: 'Call Graph'
+]
+
+{ #category : #initialization }
+PWBAnalyzeToolAppLauncher >> initializeDeadMethodsBrowserLuncher [
+	deadMethodBrowser := self newButton
+		icon: PWBBrowserIcons deadMethodLogo;
+		action: [ PWBDeadMethodsBrowser run ];
+		help: 'Open the dead methods browser'.
+	deadMethodBrowserLabel := self newLabel label: 'Dead Methods'
 ]
 
 { #category : #initialization }
@@ -80,7 +123,7 @@ PWBAnalyzeToolAppLauncher >> initializeDuplicationBrowserLuncher [
 		icon: PWBBrowserIcons duplicationLogo;
 		action: [ PWBDuplicationBrowser runMe ];
 		help: 'Open the duplication browser'.
-	duplicationBrowserLabel := self newLabel label: 'Duplication Browser'
+	duplicationBrowserLabel := self newLabel label: 'Duplication'
 ]
 
 { #category : #initialization }
@@ -89,7 +132,7 @@ PWBAnalyzeToolAppLauncher >> initializeLogBrowserLuncher [
 		icon: PWBBrowserIcons loggerLogo;
 		action: [ PWBLogBrower runMe ];
 		help: 'Open activity logs'.
-	logBrowserLabel := self newLabel label: 'Logs Browser'
+	logBrowserLabel := self newLabel label: 'Logs'
 ]
 
 { #category : #initialization }
@@ -98,7 +141,7 @@ PWBAnalyzeToolAppLauncher >> initializeMooseModelBrowserLauncher [
 		icon: PWBBrowserIcons mooseModelLogo;
 		action: [ PWBMooseModelBrowser runMe ];
 		help: 'Open the Source code FamixModel Browser'.
-	mooseModelBrowserLabel := self newLabel label: 'Model Browser'
+	mooseModelBrowserLabel := self newLabel label: 'Model'
 ]
 
 { #category : #initialization }
@@ -107,6 +150,7 @@ PWBAnalyzeToolAppLauncher >> initializePresenters [
 	self initializeCallTreeBrowserLuncher.
 	self initializeMooseModelBrowserLauncher.
 	self initializeSourceTextBrowserLauncher.
+	self initializeDeadMethodsBrowserLuncher.
 	self initializeLogBrowserLuncher
 ]
 
@@ -116,17 +160,20 @@ PWBAnalyzeToolAppLauncher >> initializeSourceTextBrowserLauncher [
 		icon: PWBBrowserIcons sourceTextLogo;
 		action: [ PWBSourceTextBrowser runMe ];
 		help: 'Open the source code Browser'.
-	sourceTextBrowserLabel := self newLabel label: 'Source code Browser'
+	sourceTextBrowserLabel := self newLabel label: 'Source code'
 ]
 
 { #category : #initialization }
 PWBAnalyzeToolAppLauncher >> initializeWindow: aWindowPresenter [
 	super initializeWindow: aWindowPresenter.
-	aWindowPresenter whenClosedDo: [ self application close .
-		PWBApplication reset ].
+	aWindowPresenter isResizeable: false.
+	aWindowPresenter color: Color lightBlue.
+	aWindowPresenter
+		whenClosedDo: [ self application close.
+			PWBApplication reset ].
 	aWindowPresenter
 		title: self title;
-		initialExtent: 600 @ 150;
+		initialExtent: 550 @ 120;
 		isResizeable: false
 ]
 

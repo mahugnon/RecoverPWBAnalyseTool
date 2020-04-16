@@ -2,38 +2,32 @@ Class {
 	#name : #QueryDeadMethods,
 	#superclass : #AbstractPWBQuery,
 	#instVars : [
-		'entityMethods'
+		'modelInvocation'
 	],
 	#category : #'PowerBuilderAnalyzeTool-Query'
 }
 
-{ #category : #'as yet unclassified' }
-QueryDeadMethods >> filterFounded: aCollection [
-	^ aCollection
-		reject: [ :each | 
-			(entityMethods
-				select: [ :e | 
-					(e outgoingInvocations
-						flatCollect: [ :invocation | invocation candidates collectAsSet: #name ])
-						includes: each name ]) isNotEmpty ]
+{ #category : #running }
+QueryDeadMethods >> checkPotentialSendersTo: aFamixPWBMethod [
+	^ modelInvocation
+		select: [ :inv | 
+			(inv candidates
+				anySatisfy: [ :candidate | candidate name = aFamixPWBMethod name ])
+				and: [ inv sender isNotPWBDead ] ]
 ]
 
 { #category : #running }
-QueryDeadMethods >> runOn: anObject [
-	entityMethods := anObject methods asSet
-		reject: [ :each | each name = 'constructor' ].
-	^ self filterFounded: self searchDeadMethod
-]
-
-{ #category : #running }
-QueryDeadMethods >> searchDeadMethod [
-	^ entityMethods
-		select: [ :method | 
-			method outgoingInvocations isEmpty
-				and: [ method incomingInvocations isEmpty ] ]
-]
-
-{ #category : #running }
-QueryDeadMethods >> toSkip [
-	^ {'constructor'}
+QueryDeadMethods >> runOn: aFamixmajorObject [
+	self flag: #ThisQueryShouldNotBeUsed.
+	"After fixing bugs in the model invocations, this query should be remove"
+	modelInvocation := aFamixmajorObject mooseModel allInvocations asSet.
+	aFamixmajorObject deadMethods
+		do: [ :aFamixPWBMethod | 
+			(self checkPotentialSendersTo: aFamixPWBMethod)
+				ifNotEmpty: [ aFamixPWBMethod isPWBDead: false ] ].
+	aFamixmajorObject deadMethods
+		do: [ :meth | 
+			(meth incomingInvocationsSenders anySatisfy: #isNotPWBDead)
+				ifTrue: [ meth isPWBDead: false ] ].
+	^ aFamixmajorObject deadMethods
 ]

@@ -107,12 +107,6 @@ PWBCallTreeBrowser >> initializeToolBar [
 		action: [ PWBNonUsedVariableBrowser new
 				selectEntity: model selected;
 				openWithSpec ].
-	uselessFunctionButton := self newButton
-		label: 'Browse obsolete Function';
-		help: 'Browse non used function.';
-		action: [ PWBNonUsedFunctionBrowser lunchOn: model selected ];
-		iconName: #glamorousExample;
-		yourself.
 	browseDuplicationButton := self newButton
 		label: 'Browse duplication';
 		help: 'Browse duplication between functions.';

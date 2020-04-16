@@ -38,7 +38,7 @@ DeadMethodsTests >> setUp [
 		mooseModel: testModel;
 		sender: testTrigger1;
 		candidates: {testFunction9}.
-	browser := PWBNonUsedFunctionBrowser new
+	browser := PWBDeadMethodsBrowser new
 ]
 
 { #category : #initialization }

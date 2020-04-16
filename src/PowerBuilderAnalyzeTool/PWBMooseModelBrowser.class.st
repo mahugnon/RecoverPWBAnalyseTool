@@ -94,9 +94,7 @@ PWBMooseModelBrowser >> initializeSearchField [
 
 { #category : #initialization }
 PWBMooseModelBrowser >> initializeTable [
-	| title |
 	modelPresenter := self newList.
-	title := 'Source code components'.
 	modelPresenter
 		display: [ :item | item name ];
 		icons: [ :each | each systemIcon ];
