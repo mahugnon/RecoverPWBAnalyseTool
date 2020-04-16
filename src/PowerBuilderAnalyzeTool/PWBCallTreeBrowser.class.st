@@ -40,7 +40,6 @@ PWBCallTreeBrowser class >> defaultSpec [
 		add:
 			(SpBoxLayout newHorizontal
 				add: #browseDuplicationButton;
-				add: #uselessFunctionButton;
 				add: #obsoleteVarButton;
 				add: #optionPanel;
 				yourself)

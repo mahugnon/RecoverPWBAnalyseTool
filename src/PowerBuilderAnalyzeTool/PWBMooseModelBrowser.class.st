@@ -108,11 +108,6 @@ PWBMooseModelBrowser >> modelPresenter [
 	^ modelPresenter
 ]
 
-{ #category : #'as yet unclassified' }
-PWBMooseModelBrowser >> needUpdate: anEntity [
-	^ model selected ~= anEntity
-]
-
 { #category : #'initialization - actions' }
 PWBMooseModelBrowser >> radioButtonsAction [
 	allModelPWBObjectButton

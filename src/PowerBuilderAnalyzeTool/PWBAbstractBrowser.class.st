@@ -122,7 +122,7 @@ PWBAbstractBrowser >> model: anObject [
 
 { #category : #api }
 PWBAbstractBrowser >> needUpdate: anEntity [
-	^ anEntity ~= model selected
+	^ anEntity ~= model selected and: [ self accept: anEntity ]
 ]
 
 { #category : #accessing }
