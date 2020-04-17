@@ -77,6 +77,33 @@ PWBDuplicationBrowser class >> runMe [
 ]
 
 { #category : #'as yet unclassified' }
+PWBDuplicationBrowser class >> scriptToExportDuplicationsOfSomePWBObjects [
+	<example>
+	| objectNames userObjects methods param duplicationFragments exporter |
+	self flag: #ToImprove.
+	objectNames := {'uo_traitement_liq_cal' . 'w_liquidation_saisie'.
+	'uo_traitement_liq_noe' . 'w_liquidation_pec'}.
+	userObjects := MooseModel root first allModelEntities
+		select: [ :e | 
+			(FamixPWBmajorObject subclasses includes: e class)
+				and: [ objectNames includes: e name ] ].
+	methods := userObjects
+		flatCollect: [ :obj | obj methods reject: #isNoisyMethod ].
+	param := DPParameters new
+		minNumberOfLines: 20;
+		frequency: 2;
+		minNumberOfCharacters: 160;
+		cleaner: DPPWBCleaner new.
+	duplicationFragments := QueryDuplication new
+		runOn: methods
+		with: param.
+	exporter := PWBDuplicationListBrowser new.
+	exporter model pwbMooseModel: duplicationFragments.
+	exporter model exportToCSV.
+	exporter model exportToCSV1
+]
+
+{ #category : #'as yet unclassified' }
 PWBDuplicationBrowser class >> testLunchOn: anObject [
 	^ self basicNew
 		initializeModel;
@@ -125,8 +152,7 @@ PWBDuplicationBrowser >> initializeBrowseListButton [
 	browseListButton := self newButton.
 	browseListButton label: 'Browser list'.
 	browseListButton
-		action: [ PWBToRemoveDuplicationListBrowser
-				openWith: model duplicationEntities ]
+		action: [ PWBDuplicationListBrowser openWith: model duplicationFragments ]
 ]
 
 { #category : #initialization }

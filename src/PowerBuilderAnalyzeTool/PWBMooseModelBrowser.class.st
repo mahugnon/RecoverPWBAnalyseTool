@@ -78,7 +78,6 @@ PWBMooseModelBrowser >> initializePresenters [
 	self initializeSearchField.
 	modelPresenter
 		whenSelectionChangedDo: [ :selected | 
-			self halt.
 			model selected: selected selectedItem.
 			self freezeDuring: [ self globallySelect: selected selectedItem ] ].
 	searchField whenTextIsAcceptedDo: [ :text | self searchFor: text ].

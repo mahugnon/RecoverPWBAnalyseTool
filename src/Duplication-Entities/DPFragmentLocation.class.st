@@ -92,6 +92,11 @@ DPFragmentLocation >> endLine: anObject [
 	endLine := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+DPFragmentLocation >> endLineInOriginalFile [
+	^ self lineNumberCorrespondingToLine: self endLine
+]
+
 { #category : #accessing }
 DPFragmentLocation >> entity [
 	<navigation: 'The entity of this code fragment'>
@@ -137,6 +142,14 @@ DPFragmentLocation >> isMemberOf: aClonedFragment [
 { #category : #accessing }
 DPFragmentLocation >> length [
 	^ self endLine - self startLine + 1
+]
+
+{ #category : #'as yet unclassified' }
+DPFragmentLocation >> lineNumberCorrespondingToLine: anInteger [
+	| entityBeginLine |
+	entityBeginLine := self entity sourceAnchor fileReference contents
+		lineNumberCorrespondingToIndex: self entity sourceAnchor startPos.
+	^ entityBeginLine + anInteger - 1
 ]
 
 { #category : #accessing }
@@ -201,4 +214,9 @@ DPFragmentLocation >> startLine [
 { #category : #accessing }
 DPFragmentLocation >> startLine: anObject [
 	startLine := anObject
+]
+
+{ #category : #'as yet unclassified' }
+DPFragmentLocation >> startLineInOriginalFile [
+	^ self lineNumberCorrespondingToLine: self startLine
 ]

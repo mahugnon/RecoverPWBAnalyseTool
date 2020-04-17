@@ -11,7 +11,8 @@ Class {
 	#instVars : [
 		'members',
 		'cloneName',
-		'color'
+		'color',
+		'entities'
 	],
 	#category : #'Duplication-Entities'
 }
@@ -68,6 +69,12 @@ DPClonedFragment >> color [
 { #category : #accessing }
 DPClonedFragment >> color: anObject [
 	color := anObject
+]
+
+{ #category : #accessing }
+DPClonedFragment >> entities [
+	<navigation: 'Entities that members of this clone fragment belongs to'>
+	^ (self members collectAsSet: #entity) asOrderedCollection
 ]
 
 { #category : #merge }
