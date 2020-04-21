@@ -56,7 +56,7 @@ PWBCallTreeBrowserTests >> testQueryIncomingInvocationsSendersAtLevel [
 		assertCollection:
 			(testUserObject1
 				incomingInvocationsSenders: 2
-				expectFromMethodsOfType: #())
+				exceptFromMethodsOfType: #())
 		hasSameElements:
 			{testUserObject2.
 			testUserObject3}

@@ -14,20 +14,19 @@ Class {
 		'typesPresenter'
 	],
 	#classVars : [
-		'uniqueInstance'
+		'current'
 	],
 	#category : #'PowerBuilderAnalyzeTool-Core'
 }
 
 { #category : #'as yet unclassified' }
 OptionPanel class >> browser: aBrower possibleEntities: aCollection1 updateTypesPresenter: aCollection2 [
-	uniqueInstance hasWindow
-		ifTrue: [ uniqueInstance window close ].
-	uniqueInstance
+	self resetCurrent.
+	current
 		browser: aBrower
 		possibleEntities: aCollection1
 		updateTypesPresenter: aCollection2.
-	uniqueInstance openWithSpec
+	current openWithSpec
 ]
 
 { #category : #specs }
@@ -55,9 +54,12 @@ OptionPanel class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #'class initialization' }
-OptionPanel class >> initialize [
-	uniqueInstance := self new
+{ #category : #initialization }
+OptionPanel class >> resetCurrent [
+	current
+		ifNotNil: [ current hasWindow
+				ifTrue: [ current window close ] ].
+	current := self new
 ]
 
 { #category : #examples }
@@ -136,7 +138,8 @@ self initializeOptions.
 	validateButton
 		label: 'Validate';
 		iconName: #smallOk;
-		action: [ self validate ].
+		action: [ self validate.
+			self window close ].
 	cancel := self newButton
 		label: 'Close';
 		action: [ self window close ];
@@ -153,11 +156,11 @@ OptionPanel >> initializeTypesPresenter [
 			((SpCheckBoxTableColumn
 				title: ' '
 				evaluated:
-					[ :aFamixBehaviour | optionParameters typeToFilter includes: aFamixBehaviour ])
+					[ :aFamixBehaviour | optionParameters isKeptType: aFamixBehaviour ])
 				onActivation:
-						[ :aFamixBehaviour | optionParameters addTypeToFilter: aFamixBehaviour ];
-				onDesactivation:
 						[ :aFamixBehaviour | optionParameters removeTypeToFilters: aFamixBehaviour ];
+				onDesactivation:
+						[ :aFamixBehaviour | optionParameters addTypeToFilter: aFamixBehaviour ];
 				width: 20;
 				yourself);
 		addColumn: (SpStringTableColumn title: 'Type' evaluated: #name).

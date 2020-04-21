@@ -13,5 +13,5 @@ QueryIncomingInvocationSendersUpToLevel class >> accept: anObject [
 QueryIncomingInvocationSendersUpToLevel >> runOn: anEntity [
 	^ anEntity
 		incomingInvocationsSenders: options maxLevel
-		expectFromMethodsOfType: #()
+		exceptFromMethodsOfType: #()
 ]

@@ -39,6 +39,11 @@ OptionParameters >> initialize [
 	maxLevel := 1
 ]
 
+{ #category : #testing }
+OptionParameters >> isKeptType: aFamixBehaviour [
+	^ (typeToFilter includes: aFamixBehaviour) not
+]
+
 { #category : #accessing }
 OptionParameters >> maxLevel [
 	^ maxLevel

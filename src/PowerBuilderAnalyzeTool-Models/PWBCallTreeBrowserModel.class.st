@@ -35,7 +35,7 @@ PWBCallTreeBrowserModel >> selected: anObject [
 	selected := anObject.
 	selectedMethodsInvocationsSendersParents := selected
 		incomingInvocationsSenders: 1
-		expectFromMethodsOfType: #()
+		exceptFromMethodsOfType: #()
 ]
 
 { #category : #initialization }
