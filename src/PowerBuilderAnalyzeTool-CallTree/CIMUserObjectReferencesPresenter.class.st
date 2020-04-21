@@ -63,20 +63,12 @@ CIMUserObjectReferencesPresenter >> buildPopupOn: aCanvas [
 									| args |
 									args := QueryArguments runOn: key.
 									value
-										do: [ :aMethod | 
+										do: [ :inv | 
 											stream
-												<< aMethod name;
+												<< inv sender name;
 												<< ' -> ';
 												<< key name;
-												<< '( '.
-											args
-												ifNotEmpty: [ 1 to: args size - 1 do: [ :iter | 
-														stream
-															<< (args at: iter) name;
-															<< ', ' ].
-													stream << args last name ].
-											stream
-												<< ' )';
+												<< (QueryInvocationArgumentsString runOn: inv);
 												cr ] ] ]).
 			aRSEdge @ (RSPopup text: text) ]
 ]

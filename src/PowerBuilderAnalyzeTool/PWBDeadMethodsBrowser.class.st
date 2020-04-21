@@ -60,6 +60,11 @@ super initializeWindow: aWindowPresenter .
 aWindowPresenter 	initialExtent: 350 @ 300
 ]
 
+{ #category : #accessing }
+PWBDeadMethodsBrowser >> selected [
+	^ self model selected
+]
+
 { #category : #TOREMOVE }
 PWBDeadMethodsBrowser >> title [
 ^'Dead Methods Browser'

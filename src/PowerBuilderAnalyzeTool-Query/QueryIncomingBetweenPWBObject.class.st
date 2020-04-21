@@ -10,9 +10,9 @@ QueryIncomingBetweenPWBObject >> runOn: aTarget with: aSource [
 	result := OrderedDictionary new.
 	(aTarget methods reject: #isNoisyMethod) asSet
 		do: [ :aMethod | 
-			| senders |
-			senders := aMethod incomingInvocationsSenders
-				select: [ :sender | sender parentType = aSource ].
-			senders ifNotEmpty: [ result at: aMethod put: senders asSet ] ].
+			| invs |
+			invs := aMethod incomingInvocations
+				select: [ :inv | inv sender parentType = aSource ].
+			invs ifNotEmpty: [ result at: aMethod put: invs asSet ] ].
 	^ result
 ]
