@@ -5,21 +5,50 @@ Class {
 		'modelPresenter',
 		'searchField',
 		'allModelPWBObjectButton',
-		'scopedView'
+		'scopedView',
+		'separator'
 	],
 	#category : #'PowerBuilderAnalyzeTool-Browsers'
 }
 
 { #category : #specs }
 PWBMooseModelBrowser class >> defaultSpec [
-	^ super defaultSpec
-		add: #modelPresenter;
+	^ SpBoxLayout newVertical
 		add:
 			(SpBoxLayout newHorizontal
-				add: #allModelPWBObjectButton;
-				add: #scopedView;
+				add: #follow
+					withConstraints: [ :constraints | 
+					constraints
+						height: self toolbarHeight;
+						width: 100;
+						expand: false ];
+				add: #highlight
+					withConstraints: [ :constraints | 
+					constraints
+						height: self toolbarHeight;
+						width: 100;
+						expand: false ];
+				add: #freeze
+					withConstraints: [ :constraints | 
+					constraints
+						height: self toolbarHeight;
+						width: 100;
+						expand: false ];
+				add: #separator
+					withConstraints: [ :constraints | 
+					constraints
+						height: self toolbarHeight;
+						width: 50;
+						expand: false ];
+				add:
+					(SpBoxLayout newHorizontal
+						add: #allModelPWBObjectButton;
+						add: #scopedView;
+						yourself)
+					withConstraints: [ :contraint | contraint height: 20 ];
 				yourself)
-			withConstraints: [ :contraint | contraint height: 20 ];
+			withConstraints: [ :constraints | constraints height: self toolbarHeight ];
+		add: #modelPresenter;
 		yourself
 ]
 
@@ -81,7 +110,12 @@ PWBMooseModelBrowser >> initializePresenters [
 			model selected: selected selectedItem.
 			self freezeDuring: [ self globallySelect: selected selectedItem ] ].
 	searchField whenTextIsAcceptedDo: [ :text | self searchFor: text ].
-	self viewRadioButton
+	self viewRadioButton.
+	separator := self newLabel
+		label: '|';
+		emphasis: #bold;
+		color: Color white;
+		yourself
 ]
 
 { #category : #initialization }

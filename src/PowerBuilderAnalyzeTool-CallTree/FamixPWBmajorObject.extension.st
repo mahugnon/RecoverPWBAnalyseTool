@@ -12,19 +12,6 @@ FamixPWBmajorObject >> content [
 ]
 
 { #category : #'*PowerBuilderAnalyzeTool-CallTree' }
-FamixPWBmajorObject >> isGenerallyUsed: obj [
-	^ {'uo_datawindow' . 'uo_traitement' . 'uo_parametres' . 'uo_dw_detail'.
-	'uo_liste_detail_en_partage'} includes: obj name
-]
-
-{ #category : #'*PowerBuilderAnalyzeTool-CallTree' }
-FamixPWBmajorObject >> numberOfIncomingInvocations [
-	^ self content
-		inject: 0
-		into: [ :sum :each | sum + each numberOfIncomingInvocations ]
-]
-
-{ #category : #'*PowerBuilderAnalyzeTool-CallTree' }
 FamixPWBmajorObject >> numberOfMethods [
 	^ self content size
 ]
