@@ -146,7 +146,6 @@ DuplicationBrowserModel >> refreshRoassal [
 
 { #category : #accessing }
 DuplicationBrowserModel >> selected: anObject [
-	self halt.
 	selected := anObject asOrderedCollection
 ]
 

@@ -53,13 +53,14 @@ DuplicationBrowserRoassalViewByEntity >> buildEntitiesShape [
 				do: [ :event | self processEntityClickEvent: event ] ]
 		as: RSGroup.
 	RSGridLayout new
-		gapSize: 200;
+		gapSize: 250;
 		on: etitiesShapes.
 	etitiesShapes
 		@
 			(RSLabeled new
-				text:
-					[ :elt | elt name , String cr , 'dupRate: ' , elt duplicationRate asString ])
+				text: [ :elt | 
+					elt parentType name , ' . ' , elt name , String cr , 'dupRate: '
+						, elt duplicationRate asString ])
 ]
 
 { #category : #accessing }
