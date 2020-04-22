@@ -1,6 +1,6 @@
 Class {
 	#name : #BrowserModeFollow,
-	#superclass : #AbstractBrowserMode,
+	#superclass : #AbstractBrowserReceiverMode,
 	#category : #'PowerBuilderAnalyzeTool-Utils-BrowserMode'
 }
 

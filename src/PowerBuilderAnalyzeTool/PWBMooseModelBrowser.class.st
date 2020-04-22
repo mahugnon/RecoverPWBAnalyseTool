@@ -14,6 +14,12 @@ Class {
 { #category : #specs }
 PWBMooseModelBrowser class >> defaultSpec [
 	^ SpBoxLayout newVertical
+		add: #propagateButton
+			withConstraints: [ :constraints | 
+			constraints
+				height: self toolbarHeight;
+				width: 100;
+				expand: false ];
 		add:
 			(SpBoxLayout newHorizontal
 				add: #follow
@@ -107,8 +113,8 @@ PWBMooseModelBrowser >> initializePresenters [
 	self initializeSearchField.
 	modelPresenter
 		whenSelectionChangedDo: [ :selected | 
-			model selected: selected selectedItem.
-			self freezeDuring: [ self globallySelect: selected selectedItem ] ].
+			model selected: (FamixTypeGroup withAll: modelPresenter selectedItems).
+			AbstractBrowserSenderMode actionFor: self ].
 	searchField whenTextIsAcceptedDo: [ :text | self searchFor: text ].
 	self viewRadioButton.
 	separator := self newLabel
@@ -130,6 +136,7 @@ PWBMooseModelBrowser >> initializeSearchField [
 PWBMooseModelBrowser >> initializeTable [
 	modelPresenter := self newList.
 	modelPresenter
+		beMultipleSelection;
 		display: [ :item | item name ];
 		icons: [ :each | each systemIcon ];
 		sortingBlock: [ :a :b | a methods asSet size > b methods asSet size ];
@@ -147,7 +154,10 @@ PWBMooseModelBrowser >> radioButtonsAction [
 	allModelPWBObjectButton
 		whenActivatedDo: [ modelPresenter items: model pwbMooseModel ].
 	scopedView
-		whenActivatedDo: [ modelPresenter items: {modelPresenter selection selectedItem} ]
+		whenActivatedDo: [ modelPresenter items: modelPresenter selectedItems.
+			modelPresenter selectItems: modelPresenter model items.
+			self needRebuild: false.
+			self buildWithSpec ]
 ]
 
 { #category : #initialization }

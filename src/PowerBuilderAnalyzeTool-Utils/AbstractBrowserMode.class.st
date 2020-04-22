@@ -4,10 +4,12 @@ Class {
 	#category : #'PowerBuilderAnalyzeTool-Utils-BrowserMode'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #api }
 AbstractBrowserMode class >> actionFor: aBrowser [
-	^ (self subclasses detect: [ :aStrategy | aStrategy mode: aBrowser ])
-		new applyOn: aBrowser
+	^ self subclasses
+		detect: [ :aStrategy | aStrategy mode: aBrowser ]
+		ifFound: [ :founded | founded new applyOn: aBrowser ]
+		ifNone: [  ]
 ]
 
 { #category : #'as yet unclassified' }

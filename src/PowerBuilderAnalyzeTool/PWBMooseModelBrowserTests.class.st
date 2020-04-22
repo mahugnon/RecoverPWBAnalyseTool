@@ -31,7 +31,7 @@ PWBMooseModelBrowserTests >> testSelectedISNotNilWhenAnItemIsSelectedInTheTree [
 { #category : #initialization }
 PWBMooseModelBrowserTests >> testSelectedItemIsNotNil [
 	browser setModelPresenterSelection.
-	self assert: browser modelPresenter selection selectedItem isNotNil
+	self assert: browser modelPresenter selectedItems isNotEmpty
 ]
 
 { #category : #initialization }

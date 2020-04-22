@@ -115,7 +115,7 @@ PWBDuplicationBrowser class >> testLunchOn: anObject [
 { #category : #visiting }
 PWBDuplicationBrowser >> accept: anObject [
 	^ {FamixPWBUserObject.
-	FAMIXTypeGroup. FamixPWBWindow } includes: anObject class
+	FamixTypeGroup. FamixPWBWindow } includes: anObject class
 ]
 
 { #category : #initialization }

@@ -6,7 +6,8 @@ Class {
 		'freeze',
 		'follow',
 		'highlight',
-		'toSelect'
+		'toSelect',
+		'propagateButton'
 	],
 	#category : #'PowerBuilderAnalyzeTool-Browsers'
 }
@@ -14,6 +15,11 @@ Class {
 { #category : #specs }
 PWBAbstractBrowser class >> defaultSpec [
 	^ SpBoxLayout newVertical
+		add: #propagateButton withConstraints: [ :constraints | 
+			constraints
+				height: self toolbarHeight;
+				width: 30;
+				expand: false ];
 		add:
 			(SpBoxLayout newHorizontal
 				add: #follow expand: false;
@@ -65,6 +71,8 @@ PWBAbstractBrowser >> initializePresenters [
 	freeze := self newRadioButton.
 	follow := self newRadioButton.
 	highlight := self newRadioButton.
+	propagateButton := self newCheckBox.
+	propagateButton label: 'Propagate'.
 	follow
 		associatedRadioButtons:
 			{freeze.
@@ -128,7 +136,7 @@ PWBAbstractBrowser >> needUpdate: anEntity [
 { #category : #accessing }
 PWBAbstractBrowser >> selectEntity: anEntity [
 	toSelect := anEntity.
-	AbstractBrowserMode actionFor: self
+	AbstractBrowserReceiverMode actionFor: self
 ]
 
 { #category : #initialization }

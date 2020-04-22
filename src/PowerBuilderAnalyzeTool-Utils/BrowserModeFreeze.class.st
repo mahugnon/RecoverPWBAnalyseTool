@@ -1,6 +1,6 @@
 Class {
 	#name : #BrowserModeFreeze,
-	#superclass : #AbstractBrowserMode,
+	#superclass : #AbstractBrowserReceiverMode,
 	#category : #'PowerBuilderAnalyzeTool-Utils-BrowserMode'
 }
 

@@ -32,7 +32,9 @@ PWBCallTreeBrowserModel >> roassal [
 
 { #category : #accessing }
 PWBCallTreeBrowserModel >> selected: anObject [
-	selected := anObject.
+	anObject isCollection
+		ifTrue: [ selected := anObject anyOne ]
+		ifFalse: [ selected := anObject ].
 	selectedMethodsInvocationsSendersParents := selected
 		incomingInvocationsSenders: 1
 		exceptFromMethodsOfType: #()

@@ -5,8 +5,7 @@ Class {
 }
 
 { #category : #running }
-QueryArguments >> runOn: anFamixPWBBehavior [
-	^ (anFamixPWBBehavior variables
-		reject: [ :each | each class = FamixPWBAttribute ])
+QueryArguments >> runOn: aCollection [
+	^ (aCollection reject: [ :each | each class = FamixPWBAttribute ])
 		select: #isArgument
 ]
