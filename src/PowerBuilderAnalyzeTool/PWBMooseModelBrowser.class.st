@@ -144,6 +144,11 @@ PWBMooseModelBrowser >> initializeTable [
 		items: model pwbMooseModel asOrderedCollection
 ]
 
+{ #category : #'accessing ' }
+PWBMooseModelBrowser >> isPropagate [
+	^ propagateButton state
+]
+
 { #category : #accessing }
 PWBMooseModelBrowser >> modelPresenter [
 	^ modelPresenter

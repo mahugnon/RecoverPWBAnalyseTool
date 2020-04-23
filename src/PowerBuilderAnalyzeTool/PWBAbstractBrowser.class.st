@@ -133,6 +133,11 @@ PWBAbstractBrowser >> needUpdate: anEntity [
 	^ anEntity ~= model selected and: [ self accept: anEntity ]
 ]
 
+{ #category : #api }
+PWBAbstractBrowser >> propagateAction [
+	self globallySelect: model selected
+]
+
 { #category : #accessing }
 PWBAbstractBrowser >> selectEntity: anEntity [
 	toSelect := anEntity.
