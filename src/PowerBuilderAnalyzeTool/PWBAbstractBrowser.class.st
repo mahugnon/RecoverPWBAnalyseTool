@@ -35,6 +35,12 @@ PWBAbstractBrowser >> accept: anObject [
 	^ self subclassResponsibility
 ]
 
+{ #category : #initialization }
+PWBAbstractBrowser >> connectPresenters [
+	super connectPresenters.
+	propagateButton whenActivatedDo: [ self propagateAction ]
+]
+
 { #category : #'as yet unclassified' }
 PWBAbstractBrowser >> followAction [
 	^ self subclassResponsibility

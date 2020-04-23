@@ -57,14 +57,14 @@ PWBCallTreeBrowser class >> run [
 { #category : #visiting }
 PWBCallTreeBrowser >> accept: anEntity [
 	^ ({DPFragmentLocation.
-	FAMIXTypeGroup.
 	FamixPWBFunction.
 	UndefinedObject} includes: anEntity class) not
+		and: [ anEntity size = 1 ]
 ]
 
 { #category : #api }
 PWBCallTreeBrowser >> followAction [
-	((self needUpdate: toSelect) and: [ self accept: toSelect ])
+	(self needUpdate: toSelect)
 		ifFalse: [ ^ self ].
 	self model selected: toSelect.
 	self updateRoassal
