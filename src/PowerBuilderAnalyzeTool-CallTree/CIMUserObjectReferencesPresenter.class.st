@@ -26,8 +26,8 @@ CIMUserObjectReferencesPresenter >> buildEdgeOn: aCanvas [
 				extent: 10 @ 15;
 				color: Color red;
 				border: borderWhite;
-				yourself) asMarker;
-				
+				yourself)
+				asMarker;
 				yourself);
 		moveBehind;
 		width: 3;
@@ -36,6 +36,7 @@ CIMUserObjectReferencesPresenter >> buildEdgeOn: aCanvas [
 				ifTrue: [ each incomingInvocationsSenders ]
 				ifFalse: [ #() ] ]
 			to: #yourself
+
 
 	"self buildePopupOnEdges: arrows"
 ]

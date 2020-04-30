@@ -22,17 +22,6 @@ PWBMooseEntityTests >> testIncomingInvocationsSenders [
 ]
 
 { #category : #tests }
-PWBMooseEntityTests >> testQueryDeadArguments [
-	self
-		assertCollection:
-			(QueryArguments
-				runOn:
-					{testLocalVar3.
-					testArg1})
-		hasSameElements: {testArg1}
-]
-
-{ #category : #tests }
 PWBMooseEntityTests >> testQueryDeadLocalVariables [
 	self
 		assertCollection:

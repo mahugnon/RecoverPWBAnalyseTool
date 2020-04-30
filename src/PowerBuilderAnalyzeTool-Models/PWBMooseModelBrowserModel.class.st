@@ -6,15 +6,21 @@ Class {
 
 { #category : #initialization }
 PWBMooseModelBrowserModel >> initialize [
-	| liq_cal |
 	super initialize.
-	liq_cal := (MooseModel root first allWithType: FamixPWBUserObject)
-		detect: [ :each | each name = 'uo_traitement_liq_cal' ].
-	pwbMooseModel := liq_cal allIncomingInvocationsSenders
-		asOrderedCollection
+	pwbMooseModel := #()
 ]
 
 { #category : #accessing }
 PWBMooseModelBrowserModel >> selected: anEntity [
 	selected := anEntity
+]
+
+{ #category : #initialization }
+PWBMooseModelBrowserModel >> setUp [
+	| liq_cal |
+	pwbMooseModel ifNotNil: [ ^ self ].
+	liq_cal := (MooseModel root first allWithType: FamixPWBUserObject)
+		detect: [ :each | each name = 'uo_traitement_liq_cal' ].
+	pwbMooseModel := liq_cal allIncomingInvocationsSenders
+		asOrderedCollection
 ]

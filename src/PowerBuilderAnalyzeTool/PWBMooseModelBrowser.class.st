@@ -61,7 +61,9 @@ PWBMooseModelBrowser class >> defaultSpec [
 { #category : #examples }
 PWBMooseModelBrowser class >> runMe [
 	<script>
-	self new openWithSpec
+	self new
+		setUp;
+		openWithSpec
 ]
 
 { #category : #visiting }
@@ -140,8 +142,7 @@ PWBMooseModelBrowser >> initializeTable [
 		display: [ :item | item name ];
 		icons: [ :each | each systemIcon ];
 		sortingBlock: [ :a :b | a methods asSet size > b methods asSet size ];
-		enableItemSubstringFilter;
-		items: model pwbMooseModel asOrderedCollection
+		enableItemSubstringFilter
 ]
 
 { #category : #'accessing ' }
@@ -178,6 +179,14 @@ PWBMooseModelBrowser >> selected [
 { #category : #testing }
 PWBMooseModelBrowser >> setModelPresenterSelection [
 	modelPresenter selectItem: modelPresenter model items first
+]
+
+{ #category : #initialization }
+PWBMooseModelBrowser >> setUp [
+	model setUp.
+	modelPresenter items: model pwbMooseModel asOrderedCollection.
+	self needRebuild: false.
+	self buildWithSpec
 ]
 
 { #category : #TOREMOVE }
