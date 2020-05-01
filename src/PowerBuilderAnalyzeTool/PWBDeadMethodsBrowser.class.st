@@ -22,7 +22,8 @@ PWBDeadMethodsBrowser class >> run [
 
 { #category : #visiting }
 PWBDeadMethodsBrowser >> accept: anObject [
-	^ FamixPWBmajorObject subclasses includes: anObject class
+	^ (FamixPWBmajorObject subclasses includes: anObject class)
+		or: [ anObject class = FamixTypeGroup ]
 ]
 
 { #category : #actions }
