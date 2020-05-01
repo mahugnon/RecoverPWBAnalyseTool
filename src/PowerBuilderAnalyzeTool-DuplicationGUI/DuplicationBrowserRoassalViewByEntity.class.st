@@ -118,6 +118,7 @@ DuplicationBrowserRoassalViewByEntity >> processEntityClickEvent: evt [
 	shape := evt shape.
 	self colorBoxsUsing: shape.
 	model
-		freezeDuring: [ PWBApplication current globallySelect: shape model.
+		freezeDuring: [ PWBApplication current
+				globallySelect: (FamixTypeGroup with: shape model).
 			model selected: shape model ]
 ]

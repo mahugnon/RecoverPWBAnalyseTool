@@ -141,7 +141,7 @@ PWBAbstractBrowser >> needUpdate: anEntity [
 
 { #category : #api }
 PWBAbstractBrowser >> propagateAction [
-	self globallySelect: model selected
+	self globallySelect: (FamixTypeGroup withAll: model selected)
 ]
 
 { #category : #accessing }
