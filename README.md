@@ -9,4 +9,4 @@ Metacello new
    onUpgrade: [ :e | e useIncoming ];       
    load   
 ```
-
+[![Build Status](https://travis-ci.org/mahugnon/RecoverPWBAnalyseTool.svg?branch=master)](https://travis-ci.org/mahugnon/RecoverPWBAnalyseTool)
