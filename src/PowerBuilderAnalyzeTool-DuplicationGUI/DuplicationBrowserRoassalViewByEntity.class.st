@@ -53,14 +53,13 @@ DuplicationBrowserRoassalViewByEntity >> buildEntitiesShape [
 				do: [ :event | self processEntityClickEvent: event ] ]
 		as: RSGroup.
 	RSGridLayout new
-		gapSize: 250;
+		gapSize: 200;
 		on: etitiesShapes.
 	etitiesShapes
 		@
 			(RSLabeled new
-				text: [ :elt | 
-					elt parentType name , ' . ' , elt name , String cr , 'dupRate: '
-						, elt duplicationRate asString ])
+				text:
+					[ :elt | elt name , String cr , 'dupRate: ' , elt duplicationRate asString ])
 ]
 
 { #category : #accessing }
@@ -118,6 +117,7 @@ DuplicationBrowserRoassalViewByEntity >> processEntityClickEvent: evt [
 	shape := evt shape.
 	self colorBoxsUsing: shape.
 	model
-		freezeDuring: [ PWBApplication current globallySelect: shape model.
+		freezeDuring: [ PWBApplication current
+				globallySelect: (FamixTypeGroup with: shape model).
 			model selected: shape model ]
 ]

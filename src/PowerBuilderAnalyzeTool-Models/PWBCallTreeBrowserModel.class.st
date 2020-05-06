@@ -32,12 +32,9 @@ PWBCallTreeBrowserModel >> roassal [
 
 { #category : #accessing }
 PWBCallTreeBrowserModel >> selected: anObject [
-	anObject isCollection
-		ifTrue: [ selected := anObject anyOne ]
-		ifFalse: [ selected := anObject ].
-	selectedMethodsInvocationsSendersParents := selected
-		incomingInvocationsSenders: 1
-		exceptFromMethodsOfType: #()
+	selected := anObject isCollection
+		ifTrue: [ anObject anyOne ]
+		ifFalse: [ anObject ]
 ]
 
 { #category : #initialization }
@@ -48,7 +45,7 @@ PWBCallTreeBrowserModel >> selectedContent [
 
 { #category : #initialization }
 PWBCallTreeBrowserModel >> selectedMethodsInvocationsSendersParents [
-	^ selectedMethodsInvocationsSendersParents asOrderedCollection
+	^ selected incomingInvocationsSenders: 1 exceptFromMethodsOfType: #()
 ]
 
 { #category : #'as yet unclassified' }

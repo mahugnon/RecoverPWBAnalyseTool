@@ -1,12 +1,6 @@
 Extension { #name : #MooseGroup }
 
 { #category : #'*PowerBuilderAnalyzeTool-CallTree' }
-MooseGroup >> content [
-	content ifNil: [ self setContent ].
-	^ content
-]
-
-{ #category : #'*PowerBuilderAnalyzeTool-CallTree' }
 MooseGroup >> cyclomaticComplexity [
 	^ self content
 		inject: 0
@@ -34,11 +28,7 @@ MooseGroup >> outgoingInvocations [
 
 { #category : #'*PowerBuilderAnalyzeTool-CallTree' }
 MooseGroup >> roassalPresenter [
-	^ CIMUserObjectReferencesPresenter
-]
-
-{ #category : #'*PowerBuilderAnalyzeTool-CallTree' }
-MooseGroup >> setContent [
-	content := self
-		sorted: [ :a :b | a numberOfLinesOfCode > b numberOfLinesOfCode ]
+	self isEmpty
+		ifTrue: [ ^ self ].
+	^ self first roassalPresenter
 ]

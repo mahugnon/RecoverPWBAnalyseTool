@@ -16,5 +16,5 @@ PWBDeadMethodsBrowserModel >> initialize [
 { #category : #accessing }
 PWBDeadMethodsBrowserModel >> selected: anObject [
 	selected := anObject.
-	pwbMooseModel := query runOn: selected
+	pwbMooseModel := selected flatCollect: [ :uo | query runOn: uo ]
 ]
