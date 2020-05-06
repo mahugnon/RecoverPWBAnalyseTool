@@ -1,6 +1,9 @@
 Class {
 	#name : #CIMFunctionInvocationsPresenter,
 	#superclass : #CIMRoassalPresenter,
+	#instVars : [
+		'invocations'
+	],
 	#category : #'PowerBuilderAnalyzeTool-CallTree-TreeBase-Presenters'
 }
 
@@ -10,62 +13,44 @@ CIMFunctionInvocationsPresenter class >> run [
 	self new openWithSpec
 ]
 
-{ #category : #initialization }
-CIMFunctionInvocationsPresenter >> drawOn: aCanvas [
-	| es eb borderWhite |
-	aCanvas @ RSDraggableCanvas @ RSZoomableCanvas.
-	es := (self pwbMooseModel
-		collect: [ :modelElement | 
-			| elipse |
-			elipse := RSEllipse new
-				draggable;
-				size: 50;
-				model: modelElement;
-				color: (ColorFunction colorFor: modelElement);
-				yourself.
-			elipse
-				when: RSMouseClick
-				do: [ :event | self processEntityClickEvent: event ] ])
-		as: RSGroup.
-	es @ RSLabeled.
-	aCanvas addAll: es.
-	borderWhite := RSBorder new
-		color: Color white;
-		yourself.
-	eb := RSEdgeBuilder arrowedLine
-		canvas: aCanvas;
-		shapes: es;
-		markerEnd:
-			((RSShapeFactory triangle
-				extent: 10 @ 20;
-				color: Color red;
-				border: borderWhite;
-				yourself) asMarker
-				offset: 35;
-				yourself);
-		moveBehind;
-		width: 2;
-		connectFromAll: [ :each | each outgoingInvocationsCandidates ].
-	RSTreeLayout new
-		verticalGap: 500;
-		on: aCanvas nodes.
-	self legend: aCanvas.
-	"	onDemand: 'Show legend';"
-	aCanvas @ RSCanvasController.
-	view := aCanvas.
-	^ aCanvas
+{ #category : #util }
+CIMFunctionInvocationsPresenter >> buildPopupOn: aCanvas [
+	| invs text |
+	aCanvas edges
+		do: [ :aRSEdge | 
+			invs := invocations select: [ :inv | inv sender = aRSEdge from model ].
+			text := Text new.
+			text
+				append:
+					(String
+						streamContents: [ :stream | 
+							invs
+								do: [ :inv | 
+									stream
+										<< inv sender name;
+										<< ' -> ';
+										<< guiModel selected name;
+										<< (QueryInvocationArgumentsString runOn: inv);
+										cr ] ]).
+			aRSEdge @ (RSPopup text: text) ]
+]
+
+{ #category : #accessing }
+CIMFunctionInvocationsPresenter >> pwbMooseModel [
+	| data |
+	invocations := guiModel selected incomingInvocations.
+	data := Set withAll: (invocations collectAsSet: #sender).
+	data add: guiModel selected.
+	^ FamixTypeGroup withAll: data
 ]
 
 { #category : #initialization }
-CIMFunctionInvocationsPresenter >> legend: aCanvas [
-	| legend |
-	legend := RSLegend new.
-	legend defaultLabel fontSize: 30.
-	legend
-		container: aCanvas;
-		text: 'Each circle is a Powerbuilder user object ';
-		text:
-			'Each arrow is an invocationfrom its source function to the target function';
-		text: 'Selected user object' withCircleColor: Color paleGreen;
-		build
+CIMFunctionInvocationsPresenter >> setConnexionOn: aRSEdge [
+	aRSEdge
+		moveBehind;
+		connectFromAll: [ :each | 
+			each = guiModel selected
+				ifTrue: [ invocations collectAsSet: #sender ]
+				ifFalse: [ #() ] ]
+			to: #yourself
 ]
