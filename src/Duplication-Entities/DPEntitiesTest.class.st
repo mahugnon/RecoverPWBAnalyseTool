@@ -18,7 +18,7 @@ DPEntitiesTest >> testClonedFragment [
 DPEntitiesTest >> testDuplicationSys [
 	| fragment program location model |
 	program := FAMIXContainerEntity new name: 'myProgram'.
-	model := MooseModel new.
+	model := FamixPWBModel  new.
 	model add: program.
 	model dupSys: DPDuplicationSystem new.
 	fragment := DPClonedFragment new

@@ -42,15 +42,6 @@ DeadMethodsTests >> setUp [
 ]
 
 { #category : #initialization }
-DeadMethodsTests >> testBrowserShouldNotUpdateOnMooseGroup [
-	| group |
-	group := {testUserObject1.
-	testUserObject2} asMooseGroup.
-	browser selectEntity: group.
-	self assert: browser selected ~= group
-]
-
-{ #category : #initialization }
 DeadMethodsTests >> testDeadMethodsStrategy1 [
 self
 		assertCollection: testModel allModelDeadMethods
