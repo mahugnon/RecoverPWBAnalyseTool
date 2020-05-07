@@ -6,18 +6,6 @@ MooseModel >> dupDetectionParams [
 ]
 
 { #category : #'*Duplication' }
-MooseModel >> duplicationRate [
-	"I return a metric that correspond to the percentage of duplication in the code."
-
-	^ self
-		lookUpPropertyNamed: #duplicationRate
-		computedAs: [ 
-			[ self entitiesForDupDetection average: #duplicationRate ]
-				on: ZeroDivide
-				do: [ SYNUnavailableMetric  ] ]
-]
-
-{ #category : #'*Duplication' }
 MooseModel >> entitiesForDupDetection [
 	^ self allContainers
 ]

@@ -42,19 +42,35 @@ MooseEntity >> duplicatedSourceText [
 
 { #category : #'*Duplication' }
 MooseEntity >> duplicationRate [
-  < MSEProperty: #duplicationRate type: #Number>
-  < MSEComment: 'Duplication Rate.'>
-  < derived>
-  ^self cloneLocations ifEmpty: [ 0 ] ifNotEmpty: [:cloneLocations |  | accumulator usefulCloneLocations |
-        accumulator := 0.
-        
-        "We remove the localisations already included in other localisations because this add noise."usefulCloneLocations := cloneLocations inject: OrderedCollection new into: [:res :cl |  res detect: [:loc |  loc includesLocation: cl ] ifNone: [ res add: cl ].
-              res ].
-        
-        "We sort the fragments by startline to get the contiguous next to each other."usefulCloneLocations sort: [:a :b |  a startLine < b startLine ].
-        usefulCloneLocations allButLast do: [:aLocation |  (aLocation contiguousWith: (usefulCloneLocations after: aLocation)) ifTrue: [ accumulator := accumulator + (usefulCloneLocations after: aLocation) startLine - aLocation startLine ] ifFalse: [ accumulator := accumulator + aLocation length ] ].
-        accumulator := accumulator + usefulCloneLocations last length.
-        accumulator / self numberOfLinesOfCode ]
+	<MSEProperty: #duplicationRate type: #Number>
+	<MSEComment: 'Duplication Rate.'>
+	<derived>
+	^ self cloneLocations
+		ifEmpty: [ 0 ]
+		ifNotEmpty: [ :cloneLocations | 
+			| accumulator usefulCloneLocations |
+			accumulator := 0.
+
+			"We remove the localisations already included in other localisations because this add noise."
+			usefulCloneLocations := cloneLocations
+				inject: OrderedCollection new
+				into: [ :res :cl | 
+					res
+						detect: [ :loc | loc includesLocation: cl ]
+						ifNone: [ res add: cl ].
+					res ].
+
+			"We sort the fragments by startline to get the contiguous next to each other."
+			usefulCloneLocations sort: [ :a :b | a startLine < b startLine ].
+			usefulCloneLocations allButLast
+				do: [ :aLocation | 
+					(aLocation contiguousWith: (usefulCloneLocations after: aLocation))
+						ifTrue: [ accumulator := accumulator
+								+ (usefulCloneLocations after: aLocation) startLine
+								- aLocation startLine ]
+						ifFalse: [ accumulator := accumulator + aLocation length ] ].
+			accumulator := accumulator + usefulCloneLocations last length.
+			accumulator asString , '/' , self sourceText lineCount asString ]
 ]
 
 { #category : #'*Duplication' }
