@@ -20,7 +20,8 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 				package: 'PowerBuilderAnalyzeTool-Query';
 				package: 'PowerBuilderAnalyzeTool-DuplicationGUI';
 				package: 'PowerBuilderAnalyzeTool-CallTree';
-				package: 'PowerBuilderAnalyzeTool-Utils';
+				package: 'PowerBuilderAnalyzeTool-Utils'; 
+				package: 'PowerBuilderAnalyzeTool-PWBCritics';
 				package: 'FamixTags';
 				package: 'PowerBuilderAnalyzeTool'
 					with: [ spec
