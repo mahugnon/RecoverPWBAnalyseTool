@@ -45,7 +45,11 @@ PWBCallTreeBrowserModel >> selectedContent [
 
 { #category : #initialization }
 PWBCallTreeBrowserModel >> selectedMethodsInvocationsSendersParents [
-	^ selected incomingInvocationsSenders: 1 exceptFromMethodsOfType: #()
+	selectedMethodsInvocationsSendersParents
+		ifNil: [ selectedMethodsInvocationsSendersParents := selected
+				incomingInvocationsSenders: 1
+				exceptFromMethodsOfType: #() ].
+	^ selectedMethodsInvocationsSendersParents
 ]
 
 { #category : #'as yet unclassified' }
