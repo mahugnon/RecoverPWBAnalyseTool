@@ -10,3 +10,4 @@ Metacello new
    load   
 ```
 [![Build Status](https://travis-ci.org/mahugnon/RecoverPWBAnalyseTool.svg?branch=master)](https://travis-ci.org/mahugnon/RecoverPWBAnalyseTool)
+[![Build Status](https://ci.inria.fr/pharo-contribution/job/PowerBuilderAnalyzeTool/badge/icon)](https://ci.inria.fr/pharo-contribution/job/PowerBuilderAnalyzeTool/)
