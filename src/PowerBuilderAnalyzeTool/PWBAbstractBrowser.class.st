@@ -141,7 +141,10 @@ PWBAbstractBrowser >> needUpdate: anEntity [
 
 { #category : #api }
 PWBAbstractBrowser >> propagateAction [
-	self globallySelect: (FamixTypeGroup withAll: model selected)
+	model selected
+		ifNotNil: [ self
+				freezeDuring: [ self
+						globallySelect: (FamixTypeGroup withAll: model selected asOrderedCollection) ] ]
 ]
 
 { #category : #accessing }
