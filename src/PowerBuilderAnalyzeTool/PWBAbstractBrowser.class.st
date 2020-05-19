@@ -146,7 +146,7 @@ PWBAbstractBrowser >> propagateAction [
 				freezeDuring: [ self
 						globallySelect:
 							(FamixTypeGroup
-								withAll: (FamixTypeGroup with: model selected asOrderedCollection)) ] ]
+								withAll: (FamixTypeGroup withAll: model selected asOrderedCollection)) ] ]
 ]
 
 { #category : #accessing }

@@ -213,8 +213,8 @@ CIMRoassalPresenter >> processEntityClickEvent: evt [
 	element := evt shape.
 	guiModel selected: element model.
 	self colorSelectedElement: element.
-	guiModel
-		freezeDuring: [ self application globallySelect: element model ]
+	"guiModel
+		freezeDuring: [ self application globallySelect: element model ]"
 ]
 
 { #category : #accessing }
@@ -230,14 +230,4 @@ self subclassResponsibility
 { #category : #accessing }
 CIMRoassalPresenter >> view [
 	^ view
-]
-
-{ #category : #initialization }
-CIMRoassalPresenter >> zoomIn [
-	RTZoomInMove on: view
-]
-
-{ #category : #initialization }
-CIMRoassalPresenter >> zoomOut [
-	RTZoomOutMove on: view
 ]
