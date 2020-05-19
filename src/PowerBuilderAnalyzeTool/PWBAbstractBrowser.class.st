@@ -144,7 +144,9 @@ PWBAbstractBrowser >> propagateAction [
 	model selected
 		ifNotNil: [ self
 				freezeDuring: [ self
-						globallySelect: (FamixTypeGroup withAll: model selected asOrderedCollection) ] ]
+						globallySelect:
+							(FamixTypeGroup
+								withAll: (FamixTypeGroup with: model selected asOrderedCollection)) ] ]
 ]
 
 { #category : #accessing }
