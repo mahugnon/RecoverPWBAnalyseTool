@@ -37,12 +37,13 @@ DuplicationBrowserModel >> computeDuplication [
 { #category : #initialization }
 DuplicationBrowserModel >> computeDuplicationWith: aCollection [
 	| param |
-	param := DPParameters new
-		minNumberOfLines: minNumberOfLines;
-		frequency: 2;
-		minNumberOfCharacters: minNumberOfCharacters;
-		cleaner: DPPWBCleaner new.
-	duplicationFragments := QueryDuplication new
+	param := FamixRepConfiguration new
+		minimumNumberOfLines: 10;
+		minimumNumberOfReplicas: 2;
+		minimumNumberOfCharacters: 80;
+		sourcesCleaner: FamixRepCPPCleaner new.
+			self halt.
+	duplicationFragments := QueryDuplication1 new
 		runOn: aCollection
 		with: param.
 	self refreshRoassal
