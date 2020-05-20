@@ -64,6 +64,12 @@ DuplicationBrowserModel >> detector [
 ]
 
 { #category : #accessing }
+DuplicationBrowserModel >> detector: aDuplicationStrategy [
+	powerbuliderDuplicationParam
+		backEndClass: aDuplicationStrategy backEndClass
+]
+
+{ #category : #accessing }
 DuplicationBrowserModel >> detectors [
 	^ DuplicationStrategy subclasses
 ]

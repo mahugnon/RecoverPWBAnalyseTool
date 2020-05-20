@@ -12,9 +12,9 @@ DuplicationWithDPDetectorStrategy class >> backEndClass [
 { #category : #running }
 DuplicationWithDPDetectorStrategy >> createBackEndParameter [
 	^ DPParameters new
-		minNumberOfLines: pWBDuplicationParameter minNumberOfLines;
+		minNumberOfLines: pWBDuplicationParameter minimumNumberOfLines;
 		frequency: 2;
-		minNumberOfCharacters: pWBDuplicationParameter minNumberOfCharacters;
+		minNumberOfCharacters: pWBDuplicationParameter minimumNumberOfCharacters;
 		cleaner: DPPWBCleaner new
 ]
 

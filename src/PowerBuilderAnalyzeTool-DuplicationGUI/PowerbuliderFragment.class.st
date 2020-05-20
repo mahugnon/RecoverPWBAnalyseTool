@@ -22,7 +22,7 @@ PowerbuliderFragment >> dupAloFragment: aFragment [
 { #category : #accessing }
 PowerbuliderFragment >> members [
 	members
-		ifNil: [ members := dupAloFragment replicas
+		ifNil: [ members := dupAloFragment members
 				collect: [ :each | 
 					PowerbuliderLocation new
 						dupAloDupLocation: each;

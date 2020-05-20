@@ -8,7 +8,8 @@ Class {
 		'minNumberOfCharactersInput',
 		'okButton',
 		'browseListButton',
-		'detectorsDropDown'
+		'detectorsDropDown',
+		'detectorsDropDownLabel'
 	],
 	#classInstVars : [
 		'colorMap'
@@ -55,7 +56,11 @@ PWBDuplicationBrowser class >> defaultSpec [
 			(SpBoxLayout newHorizontal
 				add: #minNumberOfLinesTextInput;
 				add: #minNumberOfCharactersInput;
-				add: #detectorsDropDown;
+				add:
+					(SpBoxLayout newHorizontal
+						add: #detectorsDropDownLabel;
+						add: #detectorsDropDown;
+						yourself);
 				add: #okButton
 					withConstraints: [ :constraints | constraints width: self buttonWidth ];
 				yourself)
@@ -160,8 +165,13 @@ PWBDuplicationBrowser >> initializeBrowseListButton [
 { #category : #initialization }
 PWBDuplicationBrowser >> initializeDetectorsDropDown [
 	detectorsDropDown := self newDropList.
-	detectorsDropDown items: model detectors.
-	detectorsDropDown selectItem: model detector
+	detectorsDropDown
+		items: model detectors;
+		display: [ :each | each pwbName ].
+	detectorsDropDown selectItem: model detector.
+	detectorsDropDownLabel := self newLabel
+		label: 'Detectors';
+		yourself
 ]
 
 { #category : #initialization }
@@ -185,7 +195,7 @@ PWBDuplicationBrowser >> initializeMinNumberOfCharactersInput [
 	minNumberOfCharactersInput := self
 		instantiate:
 			(SpLabelledPresenter
-				label: 'Min character: '
+				label: 'Min character:'
 				input:
 					(self newTextInput
 						autoAccept: true;
@@ -257,6 +267,11 @@ PWBDuplicationBrowser >> minNumberOfLinesTextInput [
 { #category : #accessing }
 PWBDuplicationBrowser >> mooseModel: aFamixPWBUserObject [
 	model mooseModel: aFamixPWBUserObject
+]
+
+{ #category : #initialization }
+PWBDuplicationBrowser >> pwbExtent [
+	^ 800 @ 450
 ]
 
 { #category : #specs }
