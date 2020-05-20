@@ -5,7 +5,7 @@ Class {
 		'dupAloDupLocation',
 		'clonedFragment'
 	],
-	#category : #'PowerBuilderAnalyzeTool-DuplicationGUI'
+	#category : #'PowerBuilderAnalyzeTool-DuplicationGUI-Core'
 }
 
 { #category : #accessing }

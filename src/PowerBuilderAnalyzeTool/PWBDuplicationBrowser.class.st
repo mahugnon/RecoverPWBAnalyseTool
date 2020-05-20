@@ -7,7 +7,8 @@ Class {
 		'minNumberOfLinesTextInput',
 		'minNumberOfCharactersInput',
 		'okButton',
-		'browseListButton'
+		'browseListButton',
+		'detectorsDropDown'
 	],
 	#classInstVars : [
 		'colorMap'
@@ -54,12 +55,11 @@ PWBDuplicationBrowser class >> defaultSpec [
 			(SpBoxLayout newHorizontal
 				add: #minNumberOfLinesTextInput;
 				add: #minNumberOfCharactersInput;
-				add: #okButton;
+				add: #detectorsDropDown;
+				add: #okButton
+					withConstraints: [ :constraints | constraints width: self buttonWidth ];
 				yourself)
-			withConstraints: [ :constraints | 
-				constraints
-					height: self buttonHeight;
-					width: self buttonWidth ];
+			withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 		yourself
 ]
 
@@ -94,7 +94,7 @@ PWBDuplicationBrowser class >> scriptToExportDuplicationsOfSomePWBObjects [
 		frequency: 2;
 		minNumberOfCharacters: 160;
 		cleaner: DPPWBCleaner new.
-	duplicationFragments := QueryDuplication new
+	duplicationFragments := DuplicationStrategy new
 		runOn: methods
 		with: param.
 	exporter := PWBDuplicationListBrowser new.
@@ -130,7 +130,9 @@ PWBDuplicationBrowser >> connectPresenters [
 			duplicationResultPanel := self instantiate: selection.
 			duplicationResultPanel model: model.
 			self needRebuild: false.
-			self buildWithSpec ]
+			self buildWithSpec ].
+	detectorsDropDown
+		whenSelectedItemChangedDo: [ :selection | model detector: selection ]
 ]
 
 { #category : #accessing }
@@ -153,6 +155,13 @@ PWBDuplicationBrowser >> initializeBrowseListButton [
 	browseListButton label: 'Browser list'.
 	browseListButton
 		action: [ PWBDuplicationListBrowser openWith: model duplicationFragments ]
+]
+
+{ #category : #initialization }
+PWBDuplicationBrowser >> initializeDetectorsDropDown [
+	detectorsDropDown := self newDropList.
+	detectorsDropDown items: model detectors.
+	detectorsDropDown selectItem: model detector
 ]
 
 { #category : #initialization }
@@ -205,9 +214,9 @@ PWBDuplicationBrowser >> initializeModel [
 
 { #category : #initialization }
 PWBDuplicationBrowser >> initializeOkButton [
-	okButton := self newButton
-		label: 'Do it';
-		iconName: #glamorousPlay;
+	okButton := self newLink
+		label: 'Run';
+		iconNamed: #glamorousPlay;
 		action: [ model computeDuplication ];
 		yourself
 ]
@@ -221,7 +230,8 @@ PWBDuplicationBrowser >> initializePresenters [
 	self initializeMinNumberOfLinesTextInput.
 	self initializeMinNumberOfCharactersInput.
 	self initializeOkButton.
-	self initializeBrowseListButton
+	self initializeBrowseListButton.
+	self initializeDetectorsDropDown
 ]
 
 { #category : #accessing }

@@ -9,7 +9,7 @@ Class {
 		'entities',
 		'backEndClass'
 	],
-	#category : #'PowerBuilderAnalyzeTool-DuplicationGUI'
+	#category : #'PowerBuilderAnalyzeTool-DuplicationGUI-Core'
 }
 
 { #category : #accessing }

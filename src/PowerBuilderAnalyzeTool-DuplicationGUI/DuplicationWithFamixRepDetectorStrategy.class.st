@@ -1,16 +1,16 @@
 Class {
-	#name : #QueryDuplicationWithFamixRepDetector,
-	#superclass : #QueryDuplication,
-	#category : #'PowerBuilderAnalyzeTool-Query'
+	#name : #DuplicationWithFamixRepDetectorStrategy,
+	#superclass : #DuplicationStrategy,
+	#category : #'PowerBuilderAnalyzeTool-DuplicationGUI-Core'
 }
 
 { #category : #visiting }
-QueryDuplicationWithFamixRepDetector class >> backEndClass [
+DuplicationWithFamixRepDetectorStrategy class >> backEndClass [
 	^ FamixRepDetector
 ]
 
 { #category : #running }
-QueryDuplicationWithFamixRepDetector >> createBackEndParameter [
+DuplicationWithFamixRepDetectorStrategy >> createBackEndParameter [
 	^ FamixRepConfiguration new
 		minimumNumberOfLines: pWBDuplicationParameter minimumNumberOfLines;
 		minimumNumberOfReplicas: 2;
@@ -19,7 +19,7 @@ QueryDuplicationWithFamixRepDetector >> createBackEndParameter [
 ]
 
 { #category : #running }
-QueryDuplicationWithFamixRepDetector >> fragmentsFromBackEnd [
+DuplicationWithFamixRepDetectorStrategy >> fragmentsFromBackEnd [
 	^ (self backEnd
 		configuration: self createBackEndParameter;
 		runOn: pWBDuplicationParameter entities) replicatedFragments

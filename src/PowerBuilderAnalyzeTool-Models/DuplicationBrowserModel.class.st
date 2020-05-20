@@ -48,7 +48,7 @@ DuplicationBrowserModel >> computeDuplicationWith: aCollection [
 	powerbuliderDuplicationParam
 		entities: aCollection;
 		backEndClass: self backEndClass.
-	duplicationFragments := QueryDuplication
+	duplicationFragments := DuplicationStrategy
 		runOn: powerbuliderDuplicationParam.
 	self refreshRoassal
 ]
@@ -56,6 +56,16 @@ DuplicationBrowserModel >> computeDuplicationWith: aCollection [
 { #category : #api }
 DuplicationBrowserModel >> defaultRoassalView [
 	^ DuplicationBrowserRoassalViewByEntity
+]
+
+{ #category : #accessing }
+DuplicationBrowserModel >> detector [
+	^ DuplicationStrategy chooseBackEndFor: powerbuliderDuplicationParam
+]
+
+{ #category : #accessing }
+DuplicationBrowserModel >> detectors [
+	^ DuplicationStrategy subclasses
 ]
 
 { #category : #initialization }

@@ -5,7 +5,7 @@ Class {
 		'dupAlgoSystem',
 		'fragments'
 	],
-	#category : #'PowerBuilderAnalyzeTool-DuplicationGUI'
+	#category : #'PowerBuilderAnalyzeTool-DuplicationGUI-Core'
 }
 
 { #category : #'instance creation' }

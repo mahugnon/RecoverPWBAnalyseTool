@@ -6,7 +6,7 @@ Class {
 		'color',
 		'members'
 	],
-	#category : #'PowerBuilderAnalyzeTool-DuplicationGUI'
+	#category : #'PowerBuilderAnalyzeTool-DuplicationGUI-Core'
 }
 
 { #category : #accessing }

@@ -1,16 +1,16 @@
 Class {
-	#name : #QueryDuplicationWithDPDetector,
-	#superclass : #QueryDuplication,
-	#category : #'PowerBuilderAnalyzeTool-Query'
+	#name : #DuplicationWithDPDetectorStrategy,
+	#superclass : #DuplicationStrategy,
+	#category : #'PowerBuilderAnalyzeTool-DuplicationGUI-Core'
 }
 
 { #category : #visiting }
-QueryDuplicationWithDPDetector class >> backEndClass [
+DuplicationWithDPDetectorStrategy class >> backEndClass [
 	^ DPDetector
 ]
 
 { #category : #running }
-QueryDuplicationWithDPDetector >> createBackEndParameter [
+DuplicationWithDPDetectorStrategy >> createBackEndParameter [
 	^ DPParameters new
 		minNumberOfLines: pWBDuplicationParameter minNumberOfLines;
 		frequency: 2;
@@ -19,7 +19,7 @@ QueryDuplicationWithDPDetector >> createBackEndParameter [
 ]
 
 { #category : #running }
-QueryDuplicationWithDPDetector >> fragmentsFromBackEnd [
+DuplicationWithDPDetectorStrategy >> fragmentsFromBackEnd [
 	^ (self backEnd
 		parameters: self createBackEndParameter;
 		runOn: pWBDuplicationParameter entities) fragments
