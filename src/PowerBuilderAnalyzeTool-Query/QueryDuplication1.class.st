@@ -10,7 +10,7 @@ QueryDuplication1 >> runOn: aCollection with: aFamixReplicaConfiguration [
 		withAll:
 		(FamixRepDetector new
 		configuration: aFamixReplicaConfiguration;
-		runOn: aCollection) replicatedFragments)
+		runOn: aCollection asOrderedCollection) replicatedFragments)
 		setColors;
 		fragments
 ]
