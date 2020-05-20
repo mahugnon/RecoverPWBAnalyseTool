@@ -43,7 +43,7 @@ BaselineOfRecoverPWBAnalyseTool >> baselineOfColorsExtensions: spec [
 { #category : #baselines }
 BaselineOfRecoverPWBAnalyseTool >> baselineOfFamixReplication: spec [
 	spec
-		baseline: 'FamixReplication'
+		baseline: 'FamixReplicationWithoutFamix'
 		with: [ spec
 				repository: 'github://moosetechnology/FamixReplication:v1.x.x/src' ]
 ]
