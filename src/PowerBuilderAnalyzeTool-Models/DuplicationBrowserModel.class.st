@@ -134,7 +134,7 @@ DuplicationBrowserModel >> minNumberOfCharacters [
 
 { #category : #accessing }
 DuplicationBrowserModel >> minNumberOfCharacters: anInteger [
-	powerbuliderDuplicationParam minNumberOfCharacters: anInteger
+	powerbuliderDuplicationParam minimumNumberOfCharacters: anInteger
 ]
 
 { #category : #accessing }
@@ -144,7 +144,7 @@ DuplicationBrowserModel >> minNumberOfLines [
 
 { #category : #accessing }
 DuplicationBrowserModel >> minNumberOfLines: anInteger [
-	powerbuliderDuplicationParam minNumberOfLines: anInteger
+	powerbuliderDuplicationParam minimumNumberOfLines: anInteger
 ]
 
 { #category : #accessing }
