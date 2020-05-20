@@ -11,5 +11,6 @@ PWBSourceTextBrowserModel >> selected: anObject [
 
 { #category : #accessing }
 PWBSourceTextBrowserModel >> sourceText [
+	self halt.
 	^ selected sourceText
 ]

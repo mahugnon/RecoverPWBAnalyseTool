@@ -4,23 +4,44 @@ Class {
 	#category : #'PowerBuilderAnalyzeTool-Query'
 }
 
-{ #category : #running }
-QueryDuplication >> runOn: aCollection [
-	^ (DPDetector
-		runOn: aCollection
-		parametrizedWith:
-		(DPParameters new
-		minNumberOfLines: 10;
-		frequency: 2;
-		minNumberOfCharacters: 55;
-		cleaner: DPPWBCleaner new))
-		setColors;
-		fragments
+{ #category : #visiting }
+QueryDuplication class >> accept: aBackEndClass [
+	^ aBackEndClass = self backEndClass
+]
+
+{ #category : #visiting }
+QueryDuplication class >> backEndClass [
+	^ self subclassResponsibility
 ]
 
 { #category : #running }
-QueryDuplication >> runOn: aCollection with: aDPParameters [
-	^ (DPDetector runOn: aCollection parametrizedWith: aDPParameters)
+QueryDuplication class >> runOn: aPWBDuplicationParameter [
+	^ (self subclasses
+		detect: [ :alo | alo accept: aPWBDuplicationParameter backEndClass ]) new
+		runOn: aPWBDuplicationParameter
+]
+
+{ #category : #running }
+QueryDuplication >> createBackEndFrom: aPWBDuplicationParameter [
+	self subclassResponsibility
+]
+
+{ #category : #running }
+QueryDuplication >> executeBackEndOn: aPWBDuplicationParameter [
+	^ self class backEndClass
+		configuration: (self createBackEndFrom: aPWBDuplicationParameter);
+		runOn: aPWBDuplicationParameter entities
+]
+
+{ #category : #running }
+QueryDuplication >> fragmentFrom: aPWBDuplicationParameter [
+	^ self subclassResponsibility
+]
+
+{ #category : #running }
+QueryDuplication >> runOn: aPWBDuplicationParameter [
+	^ (PowerbuliderDuplicationSystem
+		withAll: (self fragmentFrom: aPWBDuplicationParameter))
 		setColors;
 		fragments
 ]

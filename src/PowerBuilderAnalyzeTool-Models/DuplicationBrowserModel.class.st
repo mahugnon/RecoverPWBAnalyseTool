@@ -9,8 +9,7 @@ Class {
 		'focusClonedFragment',
 		'duplicationEntities',
 		'fragmentColors',
-		'minNumberOfLines',
-		'minNumberOfCharacters'
+		'powerbuliderDuplicationParam'
 	],
 	#category : #'PowerBuilderAnalyzeTool-Models'
 }
@@ -19,6 +18,16 @@ Class {
 DuplicationBrowserModel >> addFragment: anObject color: aColor [
   colorMap at: anObject entity put: aColor.
   duplicationView updateView
+]
+
+{ #category : #initialization }
+DuplicationBrowserModel >> backEndClass [
+	^ powerbuliderDuplicationParam backEndClass
+]
+
+{ #category : #initialization }
+DuplicationBrowserModel >> backEndClass: aClass [
+	powerbuliderDuplicationParam backEndClass: aClass
 ]
 
 { #category : #private }
@@ -36,16 +45,11 @@ DuplicationBrowserModel >> computeDuplication [
 
 { #category : #initialization }
 DuplicationBrowserModel >> computeDuplicationWith: aCollection [
-	| param |
-	param := FamixRepConfiguration new
-		minimumNumberOfLines: 10;
-		minimumNumberOfReplicas: 2;
-		minimumNumberOfCharacters: 80;
-		sourcesCleaner: FamixRepCPPCleaner new.
-			self halt.
-	duplicationFragments := QueryDuplication1 new
-		runOn: aCollection
-		with: param.
+	powerbuliderDuplicationParam
+		entities: aCollection;
+		backEndClass: self backEndClass.
+	duplicationFragments := QueryDuplication new
+		runOn: powerbuliderDuplicationParam.
 	self refreshRoassal
 ]
 
@@ -96,11 +100,10 @@ DuplicationBrowserModel >> focusClonedFragment [
 DuplicationBrowserModel >> initialize [
 	super initialize.
 	pwbMooseModel := #().
+	powerbuliderDuplicationParam := PowerbuliderDuplicationParam default.
 	duplicationFragments := OrderedCollection new.
 	colorMap := OrderedDictionary new.
-	selectedFragmentLocation := DPFragmentLocation new.
-	minNumberOfLines := 20.
-	minNumberOfCharacters := 160
+	selectedFragmentLocation := DPFragmentLocation new
 ]
 
 { #category : #initialization }
@@ -110,22 +113,22 @@ DuplicationBrowserModel >> initializeColors [
 
 { #category : #accessing }
 DuplicationBrowserModel >> minNumberOfCharacters [
-	^ minNumberOfCharacters
+	^ powerbuliderDuplicationParam minNumberOfCharacters
 ]
 
 { #category : #accessing }
-DuplicationBrowserModel >> minNumberOfCharacters: anInteger [ 
-	minNumberOfCharacters := anInteger
+DuplicationBrowserModel >> minNumberOfCharacters: anInteger [
+	powerbuliderDuplicationParam minNumberOfCharacters: anInteger
 ]
 
 { #category : #accessing }
 DuplicationBrowserModel >> minNumberOfLines [
-	^ minNumberOfLines
+	^ powerbuliderDuplicationParam minNumberOfLines
 ]
 
 { #category : #accessing }
-DuplicationBrowserModel >> minNumberOfLines: anInteger [ 
-	minNumberOfLines := anInteger
+DuplicationBrowserModel >> minNumberOfLines: anInteger [
+	powerbuliderDuplicationParam minNumberOfLines: anInteger
 ]
 
 { #category : #accessing }
