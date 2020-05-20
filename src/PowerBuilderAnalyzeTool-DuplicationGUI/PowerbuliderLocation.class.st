@@ -40,12 +40,17 @@ PowerbuliderLocation >> entity [
 
 { #category : #accessing }
 PowerbuliderLocation >> entitySourceCode [
-	^ dupAloDupLocation sourceText
+	^ dupAloDupLocation entitySourceCode
 ]
 
 { #category : #'class membership' }
 PowerbuliderLocation >> isMemberOf: aClonedFragment [
 	^ self clonedFragment = aClonedFragment
+]
+
+{ #category : #accessing }
+PowerbuliderLocation >> name [
+	^ dupAloDupLocation name
 ]
 
 { #category : #accessing }
