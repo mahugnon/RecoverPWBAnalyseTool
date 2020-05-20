@@ -12,7 +12,7 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 		do: [ self baselineOfPowerBuilderParser: spec.
 			self baselineOfRoassal3: spec.
 			self baselineOfColorsExtensions: spec.
-			self baselineOfFamixReplication: spec.
+			self baselineOfFamixReplicationWithoutFamix: spec.
 			spec
 				package: 'Duplication';
 				package: 'Duplication-Detection';
@@ -27,7 +27,7 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 				package: 'PowerBuilderAnalyzeTool'
 					with: [ spec
 						requires:
-							#('PowerBuilderParser' 'Roassal3' 'PowerBuilderAnalyzeTool-DuplicationGUI' 'PowerBuilderAnalyzeTool-CallTree' 'ColorsExtensions' 'FamixReplication') ] ]
+							#('PowerBuilderParser' 'Roassal3' 'PowerBuilderAnalyzeTool-DuplicationGUI' 'PowerBuilderAnalyzeTool-CallTree' 'ColorsExtensions' 'FamixReplicationWithoutFamix') ] ]
 	"package: 'PowerBuilderAnalyzeTool-Tests'
 			with: [ spec requires: #(PowerBuilderAnalyzeTool) ]"
 ]
@@ -41,7 +41,7 @@ BaselineOfRecoverPWBAnalyseTool >> baselineOfColorsExtensions: spec [
 ]
 
 { #category : #baselines }
-BaselineOfRecoverPWBAnalyseTool >> baselineOfFamixReplication: spec [
+BaselineOfRecoverPWBAnalyseTool >> baselineOfFamixReplicationWithoutFamix: spec [
 	spec
 		baseline: 'FamixReplicationWithoutFamix'
 		with: [ spec
