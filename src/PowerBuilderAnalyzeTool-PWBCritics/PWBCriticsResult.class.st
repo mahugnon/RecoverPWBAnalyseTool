@@ -39,6 +39,11 @@ PWBCriticsResult >> initialize [
 	rulesViolated := OrderedCollection new
 ]
 
+{ #category : #accessing }
+PWBCriticsResult >> model [
+	^ model
+]
+
 { #category : #adding }
 PWBCriticsResult >> removePassed: aPWBRule [
 	rulesPassed remove: aPWBRule
@@ -51,5 +56,5 @@ PWBCriticsResult >> removeViolated: aPWBRule [
 
 { #category : #'as yet unclassified' }
 PWBCriticsResult >> runRules [
-	PWBAbstractRules runRule: self
+	PWBVariableRules runRules: self
 ]
