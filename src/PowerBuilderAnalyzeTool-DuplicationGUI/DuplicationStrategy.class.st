@@ -20,7 +20,7 @@ DuplicationStrategy class >> backEndClass [
 { #category : #running }
 DuplicationStrategy class >> chooseBackEndFor: aPWBDuplicationParameter [
 	^ self subclasses
-		detect: [ :alo | alo accept: aPWBDuplicationParameter backEndClass ]
+		detect: [ :algo | algo accept: aPWBDuplicationParameter backEndClass ]
 ]
 
 { #category : #'as yet unclassified' }
