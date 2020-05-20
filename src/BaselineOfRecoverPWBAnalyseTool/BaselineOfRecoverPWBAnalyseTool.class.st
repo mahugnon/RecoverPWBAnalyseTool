@@ -9,9 +9,10 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-			do: [ self baselineOfPowerBuilderParser: spec.
+		do: [ self baselineOfPowerBuilderParser: spec.
 			self baselineOfRoassal3: spec.
 			self baselineOfColorsExtensions: spec.
+			self baselineOfFamixReplicationWithoutFamix: spec.
 			spec
 				package: 'Duplication';
 				package: 'Duplication-Detection';
@@ -20,14 +21,14 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 				package: 'PowerBuilderAnalyzeTool-Query';
 				package: 'PowerBuilderAnalyzeTool-DuplicationGUI';
 				package: 'PowerBuilderAnalyzeTool-CallTree';
-				package: 'PowerBuilderAnalyzeTool-Utils'; 
+				package: 'PowerBuilderAnalyzeTool-Utils';
 				package: 'PowerBuilderAnalyzeTool-PWBCritics';
 				package: 'FamixTags';
 				package: 'PowerBuilderAnalyzeTool'
 					with: [ spec
 						requires:
-							#('PowerBuilderParser' 'Roassal3' 'PowerBuilderAnalyzeTool-DuplicationGUI' 'PowerBuilderAnalyzeTool-CallTree' 'ColorsExtensions') ] ].
-		"package: 'PowerBuilderAnalyzeTool-Tests'
+							#('PowerBuilderParser' 'Roassal3' 'PowerBuilderAnalyzeTool-DuplicationGUI' 'PowerBuilderAnalyzeTool-CallTree' 'ColorsExtensions' 'FamixReplicationWithoutFamix') ] ]
+	"package: 'PowerBuilderAnalyzeTool-Tests'
 			with: [ spec requires: #(PowerBuilderAnalyzeTool) ]"
 ]
 
@@ -37,6 +38,14 @@ BaselineOfRecoverPWBAnalyseTool >> baselineOfColorsExtensions: spec [
 		baseline: 'ColorsExtensions'
 		with: [ spec
 				repository: 'github://pharo-contributions/ColorsExtensions:v1.x.x/src' ]
+]
+
+{ #category : #baselines }
+BaselineOfRecoverPWBAnalyseTool >> baselineOfFamixReplicationWithoutFamix: spec [
+	spec
+		baseline: 'FamixReplicationWithoutFamix'
+		with: [ spec
+				repository: 'github://moosetechnology/FamixReplication:v1.x.x/src' ]
 ]
 
 { #category : #baselines }

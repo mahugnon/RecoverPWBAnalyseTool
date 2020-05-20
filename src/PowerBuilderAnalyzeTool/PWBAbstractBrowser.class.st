@@ -96,7 +96,7 @@ PWBAbstractBrowser >> initializeWindow: aWindowPresenter [
 		whenClosedDo: [ self application windowClosed: aWindowPresenter ].
 	aWindowPresenter
 		title: self title;
-		initialExtent: 600 @ 500
+		initialExtent: self pwbExtent
 ]
 
 { #category : #initialization }
@@ -147,6 +147,11 @@ PWBAbstractBrowser >> propagateAction [
 						globallySelect:
 							(FamixTypeGroup
 								withAll: (FamixTypeGroup withAll: model selected asOrderedCollection)) ] ]
+]
+
+{ #category : #initialization }
+PWBAbstractBrowser >> pwbExtent [
+	^ 600 @ 500
 ]
 
 { #category : #accessing }

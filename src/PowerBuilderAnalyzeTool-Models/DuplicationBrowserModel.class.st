@@ -9,8 +9,7 @@ Class {
 		'focusClonedFragment',
 		'duplicationEntities',
 		'fragmentColors',
-		'minNumberOfLines',
-		'minNumberOfCharacters'
+		'powerbuliderDuplicationParam'
 	],
 	#category : #'PowerBuilderAnalyzeTool-Models'
 }
@@ -19,6 +18,16 @@ Class {
 DuplicationBrowserModel >> addFragment: anObject color: aColor [
   colorMap at: anObject entity put: aColor.
   duplicationView updateView
+]
+
+{ #category : #initialization }
+DuplicationBrowserModel >> backEndClass [
+	^ powerbuliderDuplicationParam backEndClass
+]
+
+{ #category : #initialization }
+DuplicationBrowserModel >> backEndClass: aClass [
+	powerbuliderDuplicationParam backEndClass: aClass
 ]
 
 { #category : #private }
@@ -36,21 +45,33 @@ DuplicationBrowserModel >> computeDuplication [
 
 { #category : #initialization }
 DuplicationBrowserModel >> computeDuplicationWith: aCollection [
-	| param |
-	param := DPParameters new
-		minNumberOfLines: minNumberOfLines;
-		frequency: 2;
-		minNumberOfCharacters: minNumberOfCharacters;
-		cleaner: DPPWBCleaner new.
-	duplicationFragments := QueryDuplication new
-		runOn: aCollection
-		with: param.
+	powerbuliderDuplicationParam
+		entities: aCollection;
+		backEndClass: self backEndClass.
+	duplicationFragments := DuplicationStrategy
+		runOn: powerbuliderDuplicationParam.
 	self refreshRoassal
 ]
 
 { #category : #api }
 DuplicationBrowserModel >> defaultRoassalView [
 	^ DuplicationBrowserRoassalViewByEntity
+]
+
+{ #category : #accessing }
+DuplicationBrowserModel >> detector [
+	^ DuplicationStrategy chooseBackEndFor: powerbuliderDuplicationParam
+]
+
+{ #category : #accessing }
+DuplicationBrowserModel >> detector: aDuplicationStrategy [
+	powerbuliderDuplicationParam
+		backEndClass: aDuplicationStrategy backEndClass
+]
+
+{ #category : #accessing }
+DuplicationBrowserModel >> detectors [
+	^ DuplicationStrategy subclasses
 ]
 
 { #category : #initialization }
@@ -95,11 +116,10 @@ DuplicationBrowserModel >> focusClonedFragment [
 DuplicationBrowserModel >> initialize [
 	super initialize.
 	pwbMooseModel := #().
+	powerbuliderDuplicationParam := PowerbuliderDuplicationParam default.
 	duplicationFragments := OrderedCollection new.
 	colorMap := OrderedDictionary new.
-	selectedFragmentLocation := DPFragmentLocation new.
-	minNumberOfLines := 20.
-	minNumberOfCharacters := 160
+	selectedFragmentLocation := DPFragmentLocation new
 ]
 
 { #category : #initialization }
@@ -109,22 +129,22 @@ DuplicationBrowserModel >> initializeColors [
 
 { #category : #accessing }
 DuplicationBrowserModel >> minNumberOfCharacters [
-	^ minNumberOfCharacters
+	^ powerbuliderDuplicationParam minimumNumberOfCharacters
 ]
 
 { #category : #accessing }
-DuplicationBrowserModel >> minNumberOfCharacters: anInteger [ 
-	minNumberOfCharacters := anInteger
+DuplicationBrowserModel >> minNumberOfCharacters: anInteger [
+	powerbuliderDuplicationParam minimumNumberOfCharacters: anInteger
 ]
 
 { #category : #accessing }
 DuplicationBrowserModel >> minNumberOfLines [
-	^ minNumberOfLines
+	^ powerbuliderDuplicationParam minimumNumberOfLines
 ]
 
 { #category : #accessing }
-DuplicationBrowserModel >> minNumberOfLines: anInteger [ 
-	minNumberOfLines := anInteger
+DuplicationBrowserModel >> minNumberOfLines: anInteger [
+	powerbuliderDuplicationParam minimumNumberOfLines: anInteger
 ]
 
 { #category : #accessing }

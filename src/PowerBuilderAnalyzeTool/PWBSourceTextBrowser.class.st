@@ -26,7 +26,8 @@ PWBSourceTextBrowser class >> runMe [
 PWBSourceTextBrowser >> accept: anObject [
 	^ {FamixPWBUserObject.
 	FamixPWBBehavioral.
-	DPFragmentLocation} includes: anObject class
+	DPFragmentLocation.
+	PowerbuliderLocation} includes: anObject class
 ]
 
 { #category : #initialization }

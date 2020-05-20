@@ -32,3 +32,13 @@ PWBDuplicationBrowserTests >> testMinimumParamNumberOfLineChange [
 	browser minNumberOfLinesTextInput text: 5.
 	self assert: browser minNumberOfLines equals: 5
 ]
+
+{ #category : #tests }
+PWBDuplicationBrowserTests >> testSelectTheRightDetectorStrategy [
+	| param |
+	param := PowerbuliderDuplicationParam new.
+	param backEndClass: DPDetector.
+	self
+		assert: (DuplicationStrategy chooseBackEndFor: param)
+		equals: DuplicationWithDPDetectorStrategy
+]

@@ -104,7 +104,6 @@ DuplicationBrowserRoassalViewByEntity >> processCloneClickEvent: evt [
 	self cloneShapes
 		do: [ :aCloneShape | 
 			aCloneShape model clonedFragment = shape model clonedFragment
-				ifTrue: [ aCloneShape color: Color lightGreen ]
 				ifFalse: [ aCloneShape color: Color gray ] ].
 	model selectedFragmentLocation: shape model.
 	model
