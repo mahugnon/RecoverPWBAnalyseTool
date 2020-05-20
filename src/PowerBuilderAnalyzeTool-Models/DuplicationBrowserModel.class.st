@@ -48,7 +48,7 @@ DuplicationBrowserModel >> computeDuplicationWith: aCollection [
 	powerbuliderDuplicationParam
 		entities: aCollection;
 		backEndClass: self backEndClass.
-	duplicationFragments := QueryDuplication new
+	duplicationFragments := QueryDuplication
 		runOn: powerbuliderDuplicationParam.
 	self refreshRoassal
 ]
@@ -113,7 +113,7 @@ DuplicationBrowserModel >> initializeColors [
 
 { #category : #accessing }
 DuplicationBrowserModel >> minNumberOfCharacters [
-	^ powerbuliderDuplicationParam minNumberOfCharacters
+	^ powerbuliderDuplicationParam minimumNumberOfCharacters
 ]
 
 { #category : #accessing }
@@ -123,7 +123,7 @@ DuplicationBrowserModel >> minNumberOfCharacters: anInteger [
 
 { #category : #accessing }
 DuplicationBrowserModel >> minNumberOfLines [
-	^ powerbuliderDuplicationParam minNumberOfLines
+	^ powerbuliderDuplicationParam minimumNumberOfLines
 ]
 
 { #category : #accessing }

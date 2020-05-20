@@ -10,16 +10,17 @@ QueryDuplicationWithFamixRepDetector class >> backEndClass [
 ]
 
 { #category : #running }
-QueryDuplicationWithFamixRepDetector >> createBackEndFrom: aPWBDuplicationParameter [
+QueryDuplicationWithFamixRepDetector >> createBackEndParameter [
 	^ FamixRepConfiguration new
-		minimumNumberOfLines: aPWBDuplicationParameter minNumberOfLines;
+		minimumNumberOfLines: pWBDuplicationParameter minimumNumberOfLines;
 		minimumNumberOfReplicas: 2;
-		minimumNumberOfCharacters: aPWBDuplicationParameter minNumberOfCharacters;
+		minimumNumberOfCharacters: pWBDuplicationParameter minimumNumberOfCharacters;
 		sourcesCleaner: FamixRepCPPCleaner new
 ]
 
 { #category : #running }
-QueryDuplicationWithFamixRepDetector >> fragmentFrom: aPWBDuplicationParameter [
-	^ (self executeBackEndOn: aPWBDuplicationParameter)
-		replicatedFragments
+QueryDuplicationWithFamixRepDetector >> fragmentsFromBackEnd [
+	^ (self backEnd
+		configuration: self createBackEndParameter;
+		runOn: pWBDuplicationParameter entities) replicatedFragments
 ]

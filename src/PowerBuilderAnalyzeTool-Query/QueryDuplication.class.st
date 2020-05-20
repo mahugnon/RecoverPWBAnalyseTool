@@ -1,6 +1,9 @@
 Class {
 	#name : #QueryDuplication,
 	#superclass : #AbstractPWBQuery,
+	#instVars : [
+		'pWBDuplicationParameter'
+	],
 	#category : #'PowerBuilderAnalyzeTool-Query'
 }
 
@@ -17,31 +20,40 @@ QueryDuplication class >> backEndClass [
 { #category : #running }
 QueryDuplication class >> runOn: aPWBDuplicationParameter [
 	^ (self subclasses
-		detect: [ :alo | alo accept: aPWBDuplicationParameter backEndClass ]) new
-		runOn: aPWBDuplicationParameter
+		detect: [ :alo | alo accept: aPWBDuplicationParameter backEndClass ])
+		new
+		pWBDuplicationParameter: aPWBDuplicationParameter;
+		run
 ]
 
 { #category : #running }
-QueryDuplication >> createBackEndFrom: aPWBDuplicationParameter [
-	self subclassResponsibility
+QueryDuplication >> backEnd [
+	^ self class backEndClass new
 ]
 
 { #category : #running }
-QueryDuplication >> executeBackEndOn: aPWBDuplicationParameter [
-	^ self class backEndClass
-		configuration: (self createBackEndFrom: aPWBDuplicationParameter);
-		runOn: aPWBDuplicationParameter entities
-]
-
-{ #category : #running }
-QueryDuplication >> fragmentFrom: aPWBDuplicationParameter [
+QueryDuplication >> createBackEndParameter [
 	^ self subclassResponsibility
 ]
 
 { #category : #running }
-QueryDuplication >> runOn: aPWBDuplicationParameter [
-	^ (PowerbuliderDuplicationSystem
-		withAll: (self fragmentFrom: aPWBDuplicationParameter))
+QueryDuplication >> fragmentsFromBackEnd [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+QueryDuplication >> pWBDuplicationParameter: aPWBDuplicationParameter [
+	pWBDuplicationParameter := aPWBDuplicationParameter
+]
+
+{ #category : #running }
+QueryDuplication >> run [
+	^ (PowerbuliderDuplicationSystem withAll: self fragmentsFromBackEnd)
 		setColors;
 		fragments
+]
+
+{ #category : #running }
+QueryDuplication >> runOn: aCollection [
+	
 ]

@@ -10,15 +10,17 @@ QueryDuplicationWithDPDetector class >> backEndClass [
 ]
 
 { #category : #running }
-QueryDuplicationWithDPDetector >> createBackEndFrom: aPWBDuplicationParameter [
+QueryDuplicationWithDPDetector >> createBackEndParameter [
 	^ DPParameters new
-		minNumberOfLines: aPWBDuplicationParameter minNumberOfLines;
+		minNumberOfLines: pWBDuplicationParameter minNumberOfLines;
 		frequency: 2;
-		minNumberOfCharacters: aPWBDuplicationParameter minNumberOfCharacters;
+		minNumberOfCharacters: pWBDuplicationParameter minNumberOfCharacters;
 		cleaner: DPPWBCleaner new
 ]
 
 { #category : #running }
-QueryDuplicationWithDPDetector >> fragmentFrom: aPWBDuplicationParameter [
-	^ (self executeBackEndOn: aPWBDuplicationParameter) fragments
+QueryDuplicationWithDPDetector >> fragmentsFromBackEnd [
+	^ (self backEnd
+		parameters: self createBackEndParameter;
+		runOn: pWBDuplicationParameter entities) fragments
 ]

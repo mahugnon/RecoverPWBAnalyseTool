@@ -15,8 +15,8 @@ Class {
 { #category : #accessing }
 PowerbuliderDuplicationParam class >> default [
 	^ self new
-		minNumberOfLines: 20;
-		minNumberOfCharacters: 160;
+		minimumNumberOfLines: 20;
+		minimumNumberOfCharacters: 160;
 		backEndClass: FamixRepDetector
 ]
 
