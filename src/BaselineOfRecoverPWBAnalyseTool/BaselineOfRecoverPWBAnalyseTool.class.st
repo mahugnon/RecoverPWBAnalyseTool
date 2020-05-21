@@ -9,7 +9,9 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-		do: [ self baselineOfPowerBuilderParser: spec.
+		do: [ "package: 'PowerBuilderAnalyzeTool-Tests'
+			with: [ spec requires: #(PowerBuilderAnalyzeTool) ]"
+			self baselineOfPowerBuilderParser: spec.
 			self baselineOfRoassal3: spec.
 			self baselineOfColorsExtensions: spec.
 			self baselineOfFamixReplicationWithoutFamix: spec.
@@ -17,19 +19,42 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 				package: 'Duplication';
 				package: 'Duplication-Detection';
 				package: 'Duplication-Entities';
+				
+				
 				package: 'PowerBuilderAnalyzeTool-BasicArchitecture';
+				
 				package: 'PowerBuilderAnalyzeTool-Query';
-				package: 'PowerBuilderAnalyzeTool-DuplicationGUI';
-				package: 'PowerBuilderAnalyzeTool-CallTree';
+				
+				package: 'PowerBuilderAnalyzeTool-CallGraphBrowser'
+					with: [ spec requires: #('PowerBuilderParser' 'Roassal3') ];
+
+package: 'PowerBuilderAnalyzeTool-ModelBrowser'
+					with: [ spec requires: #('PowerBuilderParser') ];		
+package: 'PowerBuilderAnalyzeTool-SourceCodeBrowser';					
+	package: 'PowerBuilderAnalyzeTool-Tests';					
+			
+				package: 'PowerBuilderAnalyzeTool-DuplicationBrowser'
+					with: [ spec
+						requires: #('PowerBuilderParser' 'Roassal3' 'FamixReplicationWithoutFamix') ];
+					
+				package: 'PowerBuilderAnalyzeTool-DeadVariables'
+					with: [ spec requires: #('PowerBuilderParser') ];
+					
+				package: 'PowerBuilderAnalyzeTool-DeadMethodBrowser'
+					with: [ spec requires: #('PowerBuilderParser') ];
+					
 				package: 'PowerBuilderAnalyzeTool-Utils';
-				package: 'PowerBuilderAnalyzeTool-PWBCritics';
+				
+				package: 'PowerBuilderAnalyzeTool-PWBCriticsBrowser';
+				
+				package: 'PowerBuilderAnalyzeTool-LogBrowser';
+				
 				package: 'FamixTags';
-				package: 'PowerBuilderAnalyzeTool'
+				
+				package: 'PowerBuilderAnalyzeTool-Launcher'
 					with: [ spec
 						requires:
-							#('PowerBuilderParser' 'Roassal3' 'PowerBuilderAnalyzeTool-DuplicationGUI' 'PowerBuilderAnalyzeTool-CallTree' 'ColorsExtensions' 'FamixReplicationWithoutFamix') ] ]
-	"package: 'PowerBuilderAnalyzeTool-Tests'
-			with: [ spec requires: #(PowerBuilderAnalyzeTool) ]"
+							#('PowerBuilderAnalyzeTool-DuplicationBrowser' 'PowerBuilderAnalyzeTool-CallGraphBrowser' 'PowerBuilderAnalyzeTool-Query' 'PowerBuilderAnalyzeTool-ModelBrowser' 'PowerBuilderAnalyzeTool-SourceCodeBrowser') ] ]
 ]
 
 { #category : #baselines }
