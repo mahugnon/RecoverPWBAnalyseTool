@@ -9,26 +9,29 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 	<baseline>
 	spec
 		for: #common
-			do: [ self baselineOfPowerBuilderParser: spec.
+		do: [ self baselineOfPowerBuilderParser: spec.
 			self baselineOfRoassal3: spec.
 			self baselineOfColorsExtensions: spec.
 			spec
 				package: 'Duplication';
 				package: 'Duplication-Detection';
 				package: 'Duplication-Entities';
-				package: 'PowerBuilderAnalyzeTool-Models';
+				package: 'PowerBuilderAnalyzeTool-DeadMethodBrowser';
+				with: [ spec requires: #('PowerBuilderParser') ];
+				package: 'PowerBuilderAnalyzeTool-DeadVariables';
+				package: 'PowerBuilderAnalyzeTool-SourceCodeBrowser';
+				package: 'PowerBuilderAnalyzeTool-BasicArchitecture';
 				package: 'PowerBuilderAnalyzeTool-Query';
-				package: 'PowerBuilderAnalyzeTool-DuplicationGUI';
-				package: 'PowerBuilderAnalyzeTool-CallTree';
-				package: 'PowerBuilderAnalyzeTool-Utils'; 
-				package: 'PowerBuilderAnalyzeTool-PWBCritics';
-				package: 'FamixTags';
-				package: 'PowerBuilderAnalyzeTool'
-					with: [ spec
-						requires:
-							#('PowerBuilderParser' 'Roassal3' 'PowerBuilderAnalyzeTool-DuplicationGUI' 'PowerBuilderAnalyzeTool-CallTree' 'ColorsExtensions') ] ].
-		"package: 'PowerBuilderAnalyzeTool-Tests'
-			with: [ spec requires: #(PowerBuilderAnalyzeTool) ]"
+				with: [ spec requires: #('PowerBuilderParser') ];
+				package: 'PowerBuilderAnalyzeTool-DuplicationBrowser'
+					with: [ spec requires: #('PowerBuilderParser' 'Roassal3') ];
+				package: 'PowerBuilderAnalyzeTool-CallGraphBrowser'
+					with: [ spec requires: #('PowerBuilderParser' 'Roassal3') ];
+				package: 'PowerBuilderAnalyzeTool-Utils';
+				package: 'PowerBuilderAnalyzeTool-PWBCriticsBrowser'
+					with: [ spec requires: #('PowerBuilderParser') ];
+				package: 'PowerBuilderAnalyzeTool-ModelBrowser'
+					with: [ spec requires: #('PowerBuilderParser') ] ]
 ]
 
 { #category : #baselines }
