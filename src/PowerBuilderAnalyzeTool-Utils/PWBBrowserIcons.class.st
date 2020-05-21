@@ -1,6 +1,6 @@
 Class {
 	#name : #PWBBrowserIcons,
-	#superclass : #PWBPresenter,
+	#superclass : #Object,
 	#classInstVars : [
 		'icons'
 	],
