@@ -26,19 +26,19 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 				package: 'PowerBuilderAnalyzeTool-Query';
 				
 				package: 'PowerBuilderAnalyzeTool-CallGraphBrowser'
-					with: [ spec requires: #('PowerBuilderParser' 'Roassal3') ];
+					with: [ spec requires: #('PowerBuilderParser' 'Roassal3' 'PowerBuilderAnalyzeTool-Utils') ];
 
 package: 'PowerBuilderAnalyzeTool-ModelBrowser'
-					with: [ spec requires: #('PowerBuilderParser') ];		
+					with: [ spec requires: #('PowerBuilderParser' 'PowerBuilderAnalyzeTool-Utils') ];		
 package: 'PowerBuilderAnalyzeTool-SourceCodeBrowser';					
 	package: 'PowerBuilderAnalyzeTool-Tests';					
 			
 				package: 'PowerBuilderAnalyzeTool-DuplicationBrowser'
 					with: [ spec
-						requires: #('PowerBuilderParser' 'Roassal3' 'FamixReplicationWithoutFamix') ];
+						requires: #('PowerBuilderParser' 'Roassal3' 'FamixReplicationWithoutFamix' 'PowerBuilderAnalyzeTool-Utils') ];
 					
 				package: 'PowerBuilderAnalyzeTool-DeadVariables'
-					with: [ spec requires: #('PowerBuilderParser') ];
+					with: [ spec requires: #('PowerBuilderParser' 'PowerBuilderAnalyzeTool-Utils') ];
 					
 				package: 'PowerBuilderAnalyzeTool-DeadMethodBrowser'
 					with: [ spec requires: #('PowerBuilderParser') ];
@@ -54,7 +54,7 @@ package: 'PowerBuilderAnalyzeTool-SourceCodeBrowser';
 				package: 'PowerBuilderAnalyzeTool-Launcher'
 					with: [ spec
 						requires:
-							#('PowerBuilderAnalyzeTool-DuplicationBrowser' 'PowerBuilderAnalyzeTool-CallGraphBrowser' 'PowerBuilderAnalyzeTool-Query' 'PowerBuilderAnalyzeTool-ModelBrowser' 'PowerBuilderAnalyzeTool-SourceCodeBrowser') ] ]
+							#('PowerBuilderAnalyzeTool-DuplicationBrowser' 'PowerBuilderAnalyzeTool-CallGraphBrowser' 'PowerBuilderAnalyzeTool-Query' 'PowerBuilderAnalyzeTool-ModelBrowser' 'PowerBuilderAnalyzeTool-SourceCodeBrowser' 'PowerBuilderAnalyzeTool-Utils') ] ]
 ]
 
 { #category : #baselines }
