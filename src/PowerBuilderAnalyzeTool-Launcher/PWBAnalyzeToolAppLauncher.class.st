@@ -15,7 +15,7 @@ Class {
 		'deadMethodBrowser',
 		'deadMethodBrowserLabel'
 	],
-	#category : #'PowerBuilderAnalyzeTool-BasicArchitecture-Launcher'
+	#category : #'PowerBuilderAnalyzeTool-Launcher'
 }
 
 { #category : #specs }

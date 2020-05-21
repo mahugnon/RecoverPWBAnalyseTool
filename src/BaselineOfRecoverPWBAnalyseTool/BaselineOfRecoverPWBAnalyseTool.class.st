@@ -17,7 +17,7 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 				package: 'Duplication';
 				package: 'Duplication-Detection';
 				package: 'Duplication-Entities';
-				package: 'PowerBuilderAnalyzeTool-Models';
+				package: 'PowerBuilderAnalyzeTool-BasicArchitecture';
 				package: 'PowerBuilderAnalyzeTool-Query';
 				package: 'PowerBuilderAnalyzeTool-DuplicationGUI';
 				package: 'PowerBuilderAnalyzeTool-CallTree';
