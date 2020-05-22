@@ -22,7 +22,8 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 				package: 'PowerBuilderAnalyzeTool-Query';
 				package: 'PowerBuilderAnalyzeTool-CallGraphBrowser'
 					with: [ spec
-						requires: #('PowerBuilderParser' 'Roassal3' 'PowerBuilderAnalyzeTool-Utils' 'FamixTaggingWithoutFamix') ];
+						requires:
+							#('PowerBuilderParser' 'Roassal3' 'PowerBuilderAnalyzeTool-Utils' 'FamixTaggingWithoutFamix') ];
 				package: 'PowerBuilderAnalyzeTool-ModelBrowser'
 					with: [ spec
 						requires: #('PowerBuilderParser' 'PowerBuilderAnalyzeTool-Utils') ];
@@ -40,7 +41,6 @@ BaselineOfRecoverPWBAnalyseTool >> baseline: spec [
 				package: 'PowerBuilderAnalyzeTool-Utils';
 				package: 'PowerBuilderAnalyzeTool-PWBCriticsBrowser';
 				package: 'PowerBuilderAnalyzeTool-LogBrowser';
-				package: 'FamixTags';
 				package: 'PowerBuilderAnalyzeTool-Launcher'
 					with: [ spec
 						requires:
