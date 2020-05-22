@@ -5,7 +5,11 @@ Class {
 		'newTagName',
 		'colorPalete',
 		'saveButton',
-		'entity'
+		'entity',
+		'tagCategories',
+		'categoriesForm',
+		'newCategoryButton',
+		'addTagCategory'
 	],
 	#category : #'PowerBuilderAnalyzeTool-CallGraphBrowser-TagForm'
 }
@@ -13,7 +17,12 @@ Class {
 { #category : #specs }
 PWBNewTagForm class >> defaultSpec [
 	^ SpBoxLayout newVertical
-		add: #newTagName
+		add:
+			(SpBoxLayout newHorizontal
+				add: #tagCategories;
+				add: #addTagCategory;
+				add: #newTagName;
+				yourself)
 			withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 		add: #colorPalete;
 		add: #saveButton
@@ -32,20 +41,29 @@ PWBNewTagForm class >> runMe [
 
 { #category : #initialization }
 PWBNewTagForm >> connectPresenters [
+	newCategoryButton
+		action: [ addTagCategory := categoriesForm.
+			self update ].
 	saveButton
 		action: [ newTagName input text isEmpty
 				ifTrue: [ ^ self ].
-			(FAMIXTag named: newTagName input text)
-				mooseModel: entity mooseModel;
+			(entity mooseModel tagNamed: newTagName input text)
+				addCategory: tagCategories selectedItem;
 				color: colorPalete selectedColor.
 			entity mooseModel resetTags.
 			self owner closeTagForm.
-			self owner update ]
+			self owner update ].
+	categoriesForm
+		whenTextIsAccepted: [ :text | 
+			entity mooseModel categoryNamed: text.
+			addTagCategory := newCategoryButton.
+			self update ]
 ]
 
 { #category : #accessing }
-PWBNewTagForm >> entity: aFamixPWBUserObject [ 
-	entity := aFamixPWBUserObject
+PWBNewTagForm >> entity: aFamixPWBUserObject [
+	entity := aFamixPWBUserObject.
+	self tagCategories: entity model
 ]
 
 { #category : #initialization }
@@ -56,5 +74,19 @@ PWBNewTagForm >> initializePresenters [
 	saveButton := self newButton
 		label: 'Save';
 		iconName: #glamorousAccept;
-		yourself
+		yourself.
+	tagCategories := self instantiate: SpLabelledDropList.
+	tagCategories label: 'Categories:'.
+	categoriesForm := self instantiate: SpLabelledTextInput.
+	categoriesForm label: 'Category name:'.
+	newCategoryButton := self newButton
+		label: 'addTag';
+		yourself.
+	addTagCategory := newCategoryButton
+]
+
+{ #category : #accessing }
+PWBNewTagForm >> tagCategories: aMooseModel [
+	tagCategories items: aMooseModel allTagCategories.
+	self update
 ]

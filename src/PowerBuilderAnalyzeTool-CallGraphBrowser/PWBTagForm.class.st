@@ -92,7 +92,8 @@ PWBTagForm >> initializePresenters [
 { #category : #initialization }
 PWBTagForm >> initializeWindow: aWindowPresenter [
 	super initializeWindow: aWindowPresenter.
-	aWindowPresenter initialExtent: 500 @ 300
+	aWindowPresenter initialExtent: 500 @ 300;
+	title: 'Tag Form'
 ]
 
 { #category : #'instance creation' }
