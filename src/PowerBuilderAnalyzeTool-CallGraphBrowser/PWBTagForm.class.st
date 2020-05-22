@@ -2,12 +2,14 @@ Class {
 	#name : #PWBTagForm,
 	#superclass : #PWBAbstractBrowser,
 	#instVars : [
-		'entity',
 		'tagsList',
 		'newTagName',
 		'colorPalete',
 		'newTagForm',
-		'addNewTag'
+		'addNewTagButton',
+		'shape',
+		'saveButton',
+		'cancelButton'
 	],
 	#category : #'PowerBuilderAnalyzeTool-CallGraphBrowser-TagForm'
 }
@@ -18,24 +20,42 @@ PWBTagForm class >> defaultSpec [
 		add:
 			(SpBoxLayout newHorizontal
 				add: #tagsList;
-				add: #addNewTag;
+				add:
+					(SpPanedLayout newHorizontal
+						position: 100;
+						add: #addNewTagButton;
+						yourself);
 				yourself)
 			withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 		add: #newTagForm;
+		add:
+			(SpPanedLayout newHorizontal
+				position: 200;
+				add:
+					(SpBoxLayout newHorizontal
+						add: #saveButton;
+						add: #cancelButton;
+						yourself)
+					withConstraints: [ :constraints | 
+						constraints
+							beNotResizable;
+							beNotShrinkable ];
+				yourself)
+			withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 		yourself
 ]
 
 { #category : #examples }
 PWBTagForm class >> runMe [
 	<script>
-	self new open
+	self new openWithSpec
 ]
 
 { #category : #api }
 PWBTagForm class >> tag: anObject [
 	^ self new
-		entity: anObject;
-		open
+		shape: anObject;
+		openWithSpec
 ]
 
 { #category : #visiting }
@@ -43,28 +63,29 @@ PWBTagForm >> accept: anObject [
 	^ true
 ]
 
+{ #category : #initialization }
+PWBTagForm >> cancelTagEntityAction [
+	self window close
+]
+
 { #category : #api }
 PWBTagForm >> closeTagForm [
-	addNewTag state: false
+	newTagForm := self newNullPresenter.
+	addNewTagButton enable.
+	self initializeSaveCancelButtons.
+	self
+		resize: self initialSize;
+		update
 ]
 
 { #category : #initialization }
 PWBTagForm >> connectPresenters [
-	addNewTag
-		whenChangedDo: [ self needRebuild: false.
-			self buildWithSpec ]
+	addNewTagButton whenChangedDo: [ self update ]
 ]
 
 { #category : #accessing }
 PWBTagForm >> entity [
-	^ entity
-]
-
-{ #category : #accessing }
-PWBTagForm >> entity: anObject [
-	entity := anObject.
-	newTagForm entity: entity.
-	tagsList items: entity mooseModel allTags
+	^ shape model
 ]
 
 { #category : #api }
@@ -78,32 +99,102 @@ PWBTagForm >> highlightAction [
 ]
 
 { #category : #initialization }
+PWBTagForm >> initialSize [
+	^ 230 @ 110
+]
+
+{ #category : #initialization }
+PWBTagForm >> initializeAddNewTagButton [
+	addNewTagButton := self newButton
+		label: 'New Tag';
+		iconName: #smallAdd;
+		action:
+				[ self newTagButtonAction ]
+]
+
+{ #category : #initialization }
+PWBTagForm >> initializeNewTagForm [
+	newTagForm := self newNullPresenter
+]
+
+{ #category : #initialization }
 PWBTagForm >> initializePresenters [
-	addNewTag := self newCheckBox.
-	addNewTag label: 'Add new  tag'.
-	addNewTag state: false.
-	tagsList := self newDropList.
+	self initializeSaveCancelButtons.
+	self initializeAddNewTagButton.
+	self initializeTagsList.
+	self initializeNewTagForm
+]
+
+{ #category : #initialization }
+PWBTagForm >> initializeSaveCancelButtons [
+	saveButton := self newButton
+		label: 'Tag entity';
+		iconName: #testGreen;
+		action: [ self tagEntityAction ];
+		yourself.
+	cancelButton := self newButton
+		label: 'Cancel';
+		iconName: #testRed;
+		action: [ self cancelTagEntityAction ];
+		yourself
+]
+
+{ #category : #initialization }
+PWBTagForm >> initializeTagsList [
+	tagsList := self instantiate: SpLabelledDropList.
 	tagsList display: [ :each | each name ].
-	"tagsList label: 'Select a Tag: '."
-	newTagForm := self instantiate: PWBNewTagForm.
-	newTagForm visibleIf: [ addNewTag state ]
+	tagsList label: 'Tags:'
 ]
 
 { #category : #initialization }
 PWBTagForm >> initializeWindow: aWindowPresenter [
 	super initializeWindow: aWindowPresenter.
-	aWindowPresenter initialExtent: 500 @ 300
+	aWindowPresenter
+		initialExtent: self initialSize;
+		title: 'Tag Form'
 ]
 
-{ #category : #'instance creation' }
-PWBTagForm >> open [
-	self openDialogWithSpec
+{ #category : #initialization }
+PWBTagForm >> newTagButtonAction [
+	addNewTagButton disable.
+	saveButton := self newNullPresenter.
+	cancelButton := self newNullPresenter.
+	self resize: self newTagFormSize.
+	newTagForm := self instantiate: PWBNewTagForm.
+	newTagForm entity: self entity.
+	self update
+]
+
+{ #category : #initialization }
+PWBTagForm >> newTagFormSize [
+	^ 700 @ 600
+]
+
+{ #category : #initialization }
+PWBTagForm >> resize: aPoint [
+	self window extent: aPoint
 ]
 
 { #category : #accessing }
 PWBTagForm >> selectEntity: anEntity [
-	entity := anEntity.
-	tagsList items: entity mooseModel allTags asOrderedCollection
+
+]
+
+{ #category : #accessing }
+PWBTagForm >> shape [
+	^ shape
+]
+
+{ #category : #accessing }
+PWBTagForm >> shape: aRSShape [
+	shape := aRSShape.
+	tagsList items: aRSShape model mooseModel tags
+]
+
+{ #category : #initialization }
+PWBTagForm >> tagEntityAction [
+	tagsList selectedItem tagEntity: self entity.
+	^ shape color: (ColorObject colorFor: self entity)
 ]
 
 { #category : #accessing }
