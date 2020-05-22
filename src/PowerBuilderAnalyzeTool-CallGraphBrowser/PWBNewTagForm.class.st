@@ -56,17 +56,6 @@ PWBNewTagForm >> close [
 
 { #category : #initialization }
 PWBNewTagForm >> connectPresenters [
-	newCategoryButton
-		action: [ addTagCategory := categoriesForm.
-			self update ].
-	saveButton
-		action: [ newTagName input text isEmpty
-				ifTrue: [ ^ self ].
-			(entity mooseModel createTagNamed: newTagName input text)
-				addCategory: tagCategories selectedItem;
-				color: colorPalete selectedColor.
-			self close ].
-	cancelButton action: [ self close ].
 	categoriesForm
 		whenTextIsAccepted: [ :text | 
 			entity mooseModel createTagCategoryNamed: text.
@@ -81,26 +70,78 @@ PWBNewTagForm >> entity: aFamixPWBUserObject [
 ]
 
 { #category : #initialization }
-PWBNewTagForm >> initializePresenters [
-	newTagName := self instantiate: SpLabelledTextInput.
-	newTagName label: 'Tag name: '.
-	colorPalete := self instantiate: PWBColorPalette.
-	saveButton := self newButton
-		label: 'Save';
-		iconName: #glamorousAccept;
-		yourself.
+PWBNewTagForm >> initializeAddTagCategory [
+	addTagCategory := newCategoryButton
+]
+
+{ #category : #initialization }
+PWBNewTagForm >> initializeCancelButton [
 	cancelButton := self newButton
 		label: 'Cancel';
 		iconName: #glamorousCancel;
 		yourself.
-	tagCategories := self instantiate: SpLabelledDropList.
-	tagCategories label: 'Categories:'.
+	cancelButton action: [ self close ]
+]
+
+{ #category : #initialization }
+PWBNewTagForm >> initializeCategoriesForm [
 	categoriesForm := self instantiate: SpLabelledTextInput.
-	categoriesForm label: 'Category name:'.
+	categoriesForm label: 'Category name:'
+]
+
+{ #category : #initialization }
+PWBNewTagForm >> initializeColorPalette [
+	colorPalete := self instantiate: PWBColorPalette
+]
+
+{ #category : #initialization }
+PWBNewTagForm >> initializeNewCategoryButton [
 	newCategoryButton := self newButton
 		label: 'New Category';
+		iconName: #smallAdd;
 		yourself.
-	addTagCategory := newCategoryButton
+	newCategoryButton
+		action: [ addTagCategory := categoriesForm.
+			self update ]
+]
+
+{ #category : #initialization }
+PWBNewTagForm >> initializeNewTagName [
+	newTagName := self instantiate: SpLabelledTextInput.
+	newTagName label: 'Tag name: '
+]
+
+{ #category : #initialization }
+PWBNewTagForm >> initializePresenters [
+	self initializeNewTagName.
+	self initializeColorPalette.
+	self initializeSaveButton.
+	self initializeCancelButton.
+	self initializeTagCategories.
+	self initializeCategoriesForm.
+	self initializeNewCategoryButton.
+	self initializeAddTagCategory
+]
+
+{ #category : #initialization }
+PWBNewTagForm >> initializeSaveButton [
+	saveButton := self newButton
+		label: 'Save';
+		iconName: #glamorousAccept;
+		yourself.
+	saveButton
+		action: [ newTagName input text isEmpty
+				ifTrue: [ ^ self ].
+			(entity mooseModel createTagNamed: newTagName input text)
+				addCategory: tagCategories selectedItem;
+				color: colorPalete selectedColor.
+			self close ]
+]
+
+{ #category : #initialization }
+PWBNewTagForm >> initializeTagCategories [
+	tagCategories := self instantiate: SpLabelledDropList.
+	tagCategories label: 'Categories:'
 ]
 
 { #category : #accessing }

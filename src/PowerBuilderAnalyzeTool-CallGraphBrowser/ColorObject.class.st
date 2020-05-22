@@ -26,5 +26,5 @@ ColorObject >> defaultColor [
 
 { #category : #'as yet unclassified' }
 ColorObject >> tagCategory [
-	^ 'Action'
+	^ #Actions
 ]

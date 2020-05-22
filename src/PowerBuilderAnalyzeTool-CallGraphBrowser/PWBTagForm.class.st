@@ -161,6 +161,7 @@ PWBTagForm >> newTagButtonAction [
 	cancelButton := self newNullPresenter.
 	self resize: self newTagFormSize.
 	newTagForm := self instantiate: PWBNewTagForm.
+	newTagForm entity: self entity.
 	self update
 ]
 
@@ -187,12 +188,12 @@ PWBTagForm >> shape [
 { #category : #accessing }
 PWBTagForm >> shape: aRSShape [
 	shape := aRSShape.
-	newTagForm entity: aRSShape model.
 	tagsList items: aRSShape model mooseModel tags
 ]
 
 { #category : #initialization }
 PWBTagForm >> tagEntityAction [
+	self halt.
 	tagsList selectedItem tagEntity: self entity.
 	^ shape color: (ColorObject colorFor: self entity)
 ]
