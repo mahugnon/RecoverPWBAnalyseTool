@@ -9,7 +9,9 @@ Class {
 		'tagCategories',
 		'categoriesForm',
 		'newCategoryButton',
-		'addTagCategory'
+		'addTagCategory',
+		'cancelButton',
+		'size'
 	],
 	#category : #'PowerBuilderAnalyzeTool-CallGraphBrowser-TagForm'
 }
@@ -25,11 +27,19 @@ PWBNewTagForm class >> defaultSpec [
 				yourself)
 			withConstraints: [ :constraints | constraints height: self toolbarHeight ];
 		add: #colorPalete;
-		add: #saveButton
+		add:
+			(SpPanedLayout newHorizontal
+				position: 250;
+				add:
+					(SpBoxLayout newHorizontal
+						add: #saveButton;
+						add: #cancelButton;
+						yourself);
+				yourself)
 			withConstraints: [ :constraints | 
-			constraints
-				height: self buttonHeight;
-				width: self buttonWidth ];
+				constraints
+					height: self buttonHeight;
+					width: self buttonWidth ];
 		yourself
 ]
 
@@ -37,6 +47,11 @@ PWBNewTagForm class >> defaultSpec [
 PWBNewTagForm class >> runMe [
 	<script>
 	self new openWithSpec
+]
+
+{ #category : #initialization }
+PWBNewTagForm >> close [
+	self owner closeTagForm
 ]
 
 { #category : #initialization }
@@ -50,8 +65,8 @@ PWBNewTagForm >> connectPresenters [
 			(entity mooseModel createTagNamed: newTagName input text)
 				addCategory: tagCategories selectedItem;
 				color: colorPalete selectedColor.
-			self owner closeTagForm.
-			self owner update ].
+			self close ].
+	cancelButton action: [ self close ].
 	categoriesForm
 		whenTextIsAccepted: [ :text | 
 			entity mooseModel createTagCategoryNamed: text.
@@ -74,12 +89,16 @@ PWBNewTagForm >> initializePresenters [
 		label: 'Save';
 		iconName: #glamorousAccept;
 		yourself.
+	cancelButton := self newButton
+		label: 'Cancel';
+		iconName: #glamorousCancel;
+		yourself.
 	tagCategories := self instantiate: SpLabelledDropList.
 	tagCategories label: 'Categories:'.
 	categoriesForm := self instantiate: SpLabelledTextInput.
 	categoriesForm label: 'Category name:'.
 	newCategoryButton := self newButton
-		label: 'addTag';
+		label: 'New Category';
 		yourself.
 	addTagCategory := newCategoryButton
 ]

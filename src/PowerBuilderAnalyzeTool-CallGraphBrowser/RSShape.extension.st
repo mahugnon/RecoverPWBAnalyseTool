@@ -2,12 +2,7 @@ Extension { #name : #RSShape }
 
 { #category : #'*PowerBuilderAnalyzeTool-CallGraphBrowser' }
 RSShape >> addTag [
-	| tagForm |
-	tagForm := PWBTagForm tag: self model.
-	tagForm window
-		okAction: [ tagForm tagsList selectedItem ifNil: [ ^ self ].
-			tagForm entity addTag: tagForm tagsList selectedItem.
-			self color: (ColorObject colorFor: self model) ]
+	PWBTagForm tag: self
 ]
 
 { #category : #'*PowerBuilderAnalyzeTool-CallGraphBrowser' }
