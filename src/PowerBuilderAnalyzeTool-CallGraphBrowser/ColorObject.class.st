@@ -4,7 +4,27 @@ Class {
 	#category : #'PowerBuilderAnalyzeTool-CallGraphBrowser-EntityColorStrategy'
 }
 
+{ #category : #private }
+ColorObject class >> colorFor: anEntity [
+	^ self new colorFor: anEntity
+]
+
+{ #category : #private }
+ColorObject >> colorFor: anEntity [
+	^ anEntity tags
+		detect: [ :aTag | 
+			aTag
+				hasCategory: (anEntity mooseModel findTagCategoryNamed: self tagCategory) ]
+		ifFound: [ :foundedTag | foundedTag color ]
+		ifNone: [ self defaultColor ]
+]
+
+{ #category : #private }
+ColorObject >> defaultColor [
+	^ Color gray
+]
+
 { #category : #'as yet unclassified' }
-ColorObject class >> futureActionTags [
-	^ #('Obsolete' 'Not sure' 'To be refactored')
+ColorObject >> tagCategory [
+	^ 'Action'
 ]

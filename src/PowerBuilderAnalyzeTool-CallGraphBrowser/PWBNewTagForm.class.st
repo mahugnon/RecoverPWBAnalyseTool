@@ -47,15 +47,14 @@ PWBNewTagForm >> connectPresenters [
 	saveButton
 		action: [ newTagName input text isEmpty
 				ifTrue: [ ^ self ].
-			(entity mooseModel tagNamed: newTagName input text)
+			(entity mooseModel createTagNamed: newTagName input text)
 				addCategory: tagCategories selectedItem;
 				color: colorPalete selectedColor.
-			entity mooseModel resetTags.
 			self owner closeTagForm.
 			self owner update ].
 	categoriesForm
 		whenTextIsAccepted: [ :text | 
-			entity mooseModel categoryNamed: text.
+			entity mooseModel createTagCategoryNamed: text.
 			addTagCategory := newCategoryButton.
 			self update ]
 ]
@@ -63,7 +62,7 @@ PWBNewTagForm >> connectPresenters [
 { #category : #accessing }
 PWBNewTagForm >> entity: aFamixPWBUserObject [
 	entity := aFamixPWBUserObject.
-	self tagCategories: entity model
+	self tagCategories: entity mooseModel
 ]
 
 { #category : #initialization }

@@ -64,7 +64,7 @@ PWBTagForm >> entity [
 PWBTagForm >> entity: anObject [
 	entity := anObject.
 	newTagForm entity: entity.
-	tagsList items: entity mooseModel allTags
+	tagsList items: entity mooseModel tags
 ]
 
 { #category : #api }
