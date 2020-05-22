@@ -194,7 +194,8 @@ PWBTagForm >> shape: aRSShape [
 { #category : #initialization }
 PWBTagForm >> tagEntityAction [
 	tagsList selectedItem tagEntity: self entity.
-	^ shape color: (ColorObject colorFor: self entity)
+	shape color: (ColorObject colorFor: self entity).
+	self cancelTagEntityAction
 ]
 
 { #category : #accessing }

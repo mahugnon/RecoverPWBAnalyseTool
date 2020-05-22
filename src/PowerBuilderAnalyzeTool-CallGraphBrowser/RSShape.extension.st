@@ -1,18 +1,12 @@
 Extension { #name : #RSShape }
 
 { #category : #'*PowerBuilderAnalyzeTool-CallGraphBrowser' }
-RSShape >> addTag [
+RSShape >> addActionsTag [
 	PWBTagForm tag: self
 ]
 
 { #category : #'*PowerBuilderAnalyzeTool-CallGraphBrowser' }
-RSShape >> markAs: aString [
-	self model addTag: (self model tagNamed: aString).
-	^ self color: (ColorObject colorFor: self model)
-]
-
-{ #category : #'*PowerBuilderAnalyzeTool-CallGraphBrowser' }
-RSShape >> unMark [
+RSShape >> removeActionsTag [
 	(self model mooseModel findTagCategoryNamed: #Actions) markedTags
 		do: [ :aTag | self model removeTag: aTag ]
 ]

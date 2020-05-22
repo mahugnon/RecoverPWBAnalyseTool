@@ -17,6 +17,11 @@ CIMRoassalPresenter class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #'as yet unclassified' }
+CIMRoassalPresenter >> actionsTags [
+	^ guiModel actionsTags
+]
+
 { #category : #util }
 CIMRoassalPresenter >> adapterFrom: aCollection [
   ^self pwbMooseModel select: [:each |  aCollection includes: each pwbMooseModel ]
@@ -106,11 +111,11 @@ CIMRoassalPresenter >> contextMenu [
 			menu
 				add: 'Tag element'
 					target: element
-					selector: #addTag
+					selector: #addActionsTag
 					argument: #();
-				add: 'Remove tag'
+				add: 'Remove Actions tag'
 					target: element
-					selector: #unMark
+					selector: #removeActionsTag
 					argument: #() ];
 		yourself
 ]
@@ -180,13 +185,10 @@ CIMRoassalPresenter >> legend: aCanvas [
 		text: 'Each circle is a Powerbuilder class ';
 		text:
 			'Each arrow is a group of invocation from its source user class to the target class';
-		text: 'Selected user class' withCircleColor: Color paleGreen;
-		text: 'Deprecated class' withCircleColor: Color red;
-		text: 'User object to refactor'
-			withCircleColor: Color orange;
-		text: 'Not sure of action to perform about the class'
-			withCircleColor: Color yellow;
-		build
+		text: 'Selected user class' withCircleColor: Color paleGreen.
+	self actionsTags
+		do: [ :each | legend text: each name withCircleColor: each color ].
+	legend build
 ]
 
 { #category : #initialization }

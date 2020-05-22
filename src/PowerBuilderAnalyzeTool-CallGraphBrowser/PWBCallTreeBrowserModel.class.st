@@ -9,6 +9,21 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+PWBCallTreeBrowserModel >> actionsCategory [
+	^ #Actions
+]
+
+{ #category : #'as yet unclassified' }
+PWBCallTreeBrowserModel >> actionsTags [
+	| mooseModel |
+	mooseModel := selected mooseModel.
+	^ ([ mooseModel findTagCategoryNamed: self actionsCategory ]
+		on: NotFound
+		do: [ mooseModel createTagCategoryNamed: self actionsCategory ])
+		markedTags
+]
+
+{ #category : #api }
 PWBCallTreeBrowserModel >> globallySelect: anEntity [
 	pwbBrowser globallySelect: anEntity
 ]
@@ -52,7 +67,7 @@ PWBCallTreeBrowserModel >> selectedMethodsInvocationsSendersParents [
 	^ selectedMethodsInvocationsSendersParents
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #api }
 PWBCallTreeBrowserModel >> selectedMethodsInvocationsSendersTypes [
 	^ selected methodsInvocationsSendersTypes asOrderedCollection
 ]
