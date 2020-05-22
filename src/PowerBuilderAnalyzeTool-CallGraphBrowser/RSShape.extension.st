@@ -13,6 +13,6 @@ RSShape >> markAs: aString [
 
 { #category : #'*PowerBuilderAnalyzeTool-CallGraphBrowser' }
 RSShape >> unMark [
-	self model allTags do: [ :tag | self model removeTag: tag ].
-	self color: (ColorObject colorFor: self model)
+	(self model mooseModel findTagCategoryNamed: #Actions) markedTags
+		do: [ :aTag | self model removeTag: aTag ]
 ]
