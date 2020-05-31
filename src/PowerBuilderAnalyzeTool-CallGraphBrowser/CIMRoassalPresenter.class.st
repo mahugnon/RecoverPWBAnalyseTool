@@ -187,7 +187,8 @@ CIMRoassalPresenter >> legend: aCanvas [
 			'Each arrow is a group of invocation from its source user class to the target class';
 		text: 'Selected user class' withCircleColor: Color paleGreen.
 	self actionsTags
-		do: [ :each | legend text: each name withCircleColor: each color ].
+		do:
+			[ :each | legend text: 'Class tag with ' , each name withCircleColor: each color ].
 	legend build
 ]
 
