@@ -17,9 +17,8 @@ PWBCriticsRunner class >> runOn: aCollection [
 
 { #category : #running }
 PWBCriticsRunner class >> runOn: aRepoPathString withVcs: aVcs [
-	self
-		runOn:
-			(PWBLastChangesFileDownloader lastChanges: aRepoPathString vcs: aVcs)
+	^ self
+		runOn: (PWBLastChangesFileDownloader lastChanges: aRepoPathString vcs: aVcs)
 ]
 
 { #category : #accessing }
