@@ -8,6 +8,22 @@ Class {
 	#category : #'PowerBuilderAnalyzeTool-PWBCriticsBrowser'
 }
 
+{ #category : #'as yet unclassified' }
+PWBCriticsRunner class >> downloadLastChangesFromRepo: aRepoPathString [
+	| head result changes  changesSeparator filesRelativePath |
+
+	result := LibC resultOfCommand: 'svn log --limit 1 ' , aRepoPathString.
+	result := '|' split: result.
+	head := result first copyWithRegex: '-.*r' matchesReplacedWith: ''.
+	changes := LibC resultOfCommand: 'svn diff -c ' , head , ' ' ,  aRepoPathString.
+	changesSeparator := '==================================================================='.
+	filesRelativePath := (((changesSeparator split: changes)
+		collect:
+			[ :each | each copyWithRegex: '.*Index|.*stream' matchesReplacedWith: '' ])
+		reject: [ :each | (each endsWith: 'pbl' , String crlf) or: [ each = String crlf ] ])
+		collect: [ :each | each copyReplaceAll: ':' with: '' ]
+]
+
 { #category : #running }
 PWBCriticsRunner class >> runOn: aCollection [
 	^ self new
