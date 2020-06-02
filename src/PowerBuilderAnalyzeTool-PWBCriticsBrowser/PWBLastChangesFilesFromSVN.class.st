@@ -11,15 +11,16 @@ PWBLastChangesFilesFromSVN class >> vcs [
 
 { #category : #accessing }
 PWBLastChangesFilesFromSVN >> downloadLastChanges [
-	(self locationOfProjectRepo / 'protectChanges') ensureCreateDirectory.
 	^ self lastChanges
 		collect: [ :each | 
-			| filename |
-			filename := each copyReplaceAll: 'ws_objects' with: ''.
-			LibC
-				resultOfCommand:
-					'svn export ' , repoPathString , '/' , each trim , '  '
-						, self locationOfProjectRepo pathString , '/protectChanges' ]
+			self
+				crTrace:
+					(LibC
+						resultOfCommand:
+							'svn export ' , repoPathString , '/' , each trim , '  '
+								, self protectChanges).
+			self protectChanges
+				, (each trim copyWithRegex: '.*src' matchesReplacedWith: '') ]
 ]
 
 { #category : #accessing }

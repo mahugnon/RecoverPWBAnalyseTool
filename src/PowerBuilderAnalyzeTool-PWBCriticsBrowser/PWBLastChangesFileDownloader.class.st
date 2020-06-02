@@ -56,6 +56,12 @@ PWBLastChangesFileDownloader >> locationOfProjectRepo: aProject [
 	^ icebergRepository location
 ]
 
+{ #category : #'as yet unclassified' }
+PWBLastChangesFileDownloader >> protectChanges [
+	(self locationOfProjectRepo / 'protectChanges') ensureCreateDirectory.
+	^ self locationOfProjectRepo pathString , '/protectChanges'
+]
+
 { #category : #accessing }
 PWBLastChangesFileDownloader >> repoPathString [
 	^ repoPathString
