@@ -18,17 +18,17 @@ QueryPresentationGroup >> mergePresentationEntitiesPartialGroup: aCollection [
 	merge := OrderedCollection with: aCollection anyOne.
 	aCollection
 		keysAndValuesDo: [ :key :value | 
+			| groups |
 			(value includes: key)
 				ifFalse: [ value add: key ].
-			merge
-				do: [ :each | 
-					each & value
-						ifEmpty: [ merge add: value ]
-						ifNotEmpty: [ | eachAndValue |
-							eachAndValue := (value , each) asSet
-								select: [ :majorObject | majorObject isTaggedWith: presentation ].
-							merge remove: each.
-							merge add: eachAndValue ] ] ].
+			groups := merge select: [ :aGroup | (aGroup & value) isNotEmpty ].
+			groups
+				ifEmpty: [ merge add: value ]
+				ifNotEmpty: [ | eachAndValue |
+					eachAndValue := (value , groups flatten) asSet
+						select: [ :majorObject | majorObject isTaggedWith: presentation ].
+					merge removeAll: groups.
+					merge add: eachAndValue ] ].
 	^ merge
 ]
 
@@ -44,16 +44,18 @@ QueryPresentationGroup >> presentationEntitiesPartialGroup: aCollection [
 	result := OrderedDictionary new.
 	aCollection
 		keysAndValuesDo: [ :key :value | 
-			result
-				at: key
-				put:
-					(value
-						flatCollect: [ :inv | inv candidates collectAsSet: #parentType ]) ].
+			(key isTaggedWith: presentation)
+				ifTrue: [ | resultValue |
+					resultValue := (value
+						flatCollect: [ :inv | inv candidates collectAsSet: #parentType ])
+						select: [ :obj | obj isNotNil and: [ obj isTaggedWith: presentation ] ].
+					resultValue ifNotEmpty: [ result at: key put: resultValue ] ] ].
 	^ result
 ]
 
 { #category : #running }
 QueryPresentationGroup >> runOn: aMooseModel [
+	self halt.
 	self tag: aMooseModel.
 	^ self
 		mergePresentationEntitiesPartialGroup:
