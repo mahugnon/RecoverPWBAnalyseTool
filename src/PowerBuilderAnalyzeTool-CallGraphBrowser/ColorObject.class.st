@@ -14,7 +14,7 @@ ColorObject >> colorFor: anEntity [
 	^ anEntity tags
 		detect: [ :aTag | 
 			aTag
-				hasCategory: (anEntity mooseModel findTagCategoryNamed: self tagCategory) ]
+				hasCategory: (anEntity mooseModel tagCategoryNamed: self tagCategory) ]
 		ifFound: [ :foundedTag | foundedTag color ]
 		ifNone: [ self defaultColor ]
 ]

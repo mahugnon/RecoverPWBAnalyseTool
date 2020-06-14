@@ -141,7 +141,9 @@ PWBNewTagForm >> initializeSaveButton [
 { #category : #initialization }
 PWBNewTagForm >> initializeTagCategories [
 	tagCategories := self instantiate: SpLabelledDropList.
-	tagCategories label: 'Categories:'
+	tagCategories
+		label: 'Categories:';
+		display: [ :cat | cat name ]
 ]
 
 { #category : #accessing }

@@ -55,7 +55,6 @@ QueryPresentationGroup >> presentationEntitiesPartialGroup: aCollection [
 
 { #category : #running }
 QueryPresentationGroup >> runOn: aMooseModel [
-	self halt.
 	self tag: aMooseModel.
 	^ self
 		mergePresentationEntitiesPartialGroup:
