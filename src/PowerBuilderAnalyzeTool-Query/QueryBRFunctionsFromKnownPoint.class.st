@@ -20,25 +20,27 @@ QueryBRFunctionsFromKnownPoint >> runOn: aCollectionOfPWBObjects [
 	| methods |
 	methods := (self extractVariables: aCollectionOfPWBObjects)
 		flatCollectAsSet: #accessingMethods.
-	self selectIncomingInvocationMethodsUntilConvergence: methods
+	^ self selectIncomingInvocationMethodsUntilConvergence: methods
 ]
 
 { #category : #running }
 QueryBRFunctionsFromKnownPoint >> selectIncomingInvocationMethodsUntilConvergence: methods [
-	| converge |
+	| converge convergingMethods |
 	converge := false.
+	convergingMethods := methods.
 	[ converge ]
 		whileFalse: [ | invocationMethods |
 			invocationMethods := Set
 				withAll:
-					methods
+					convergingMethods
 						,
-							(methods
+							(convergingMethods
 								flatCollectAsSet: [ :m | 
 									(m queryAllIncomingInvocations
 										reject: [ :e | e class usesFamixTrait: FamixTAccess ])
 										collect: #sender ]).
-			invocationMethods size = methods size
+			invocationMethods size = convergingMethods size
 				ifTrue: [ converge := true ]
-				ifFalse: [ methods = invocationMethods ] ]
+				ifFalse: [ convergingMethods := invocationMethods ] ].
+	^ convergingMethods
 ]
