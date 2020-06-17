@@ -18,6 +18,11 @@ PowerbuliderLocation >> clonedFragment: aPowerbuliderDuplicationSystem [
 	clonedFragment := aPowerbuliderDuplicationSystem
 ]
 
+{ #category : #'as yet unclassified' }
+PowerbuliderLocation >> clonedFragmentSize [
+	^ clonedFragment members size
+]
+
 { #category : #accessing }
 PowerbuliderLocation >> codeText [
 	^ dupAloDupLocation codeText
