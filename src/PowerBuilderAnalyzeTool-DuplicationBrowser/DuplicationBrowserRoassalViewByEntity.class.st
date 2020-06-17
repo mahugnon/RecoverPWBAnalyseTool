@@ -28,7 +28,9 @@ DuplicationBrowserRoassalViewByEntity >> buildCloneShapes: anEntity [
 				when: RSMouseLeftClick
 				do: [ :evt | self processCloneClickEvent: evt ] ]
 		as: RSGroup.
-	RSGridLayout on: cloneBoxs.
+	RSGridLayout new 
+	gapSize: 20;
+	 on: cloneBoxs.
 	^ cloneBoxs
 ]
 
@@ -38,6 +40,11 @@ DuplicationBrowserRoassalViewByEntity >> buildEntitiesShape [
 		collect: [ :anEntity | 
 			| composite border cloneBoxs |
 			cloneBoxs := self buildCloneShapes: anEntity.
+			RSNormalizer size
+				from: 10;
+				to: 25;
+				shapes: cloneBoxs;
+				normalize: [ :box | box clonedFragmentSize ].
 			border := RSBorder new
 				color: Color black;
 				width: 2.
@@ -55,6 +62,9 @@ DuplicationBrowserRoassalViewByEntity >> buildEntitiesShape [
 	RSGridLayout new
 		gapSize: 200;
 		on: etitiesShapes.
+	"RSNormalizer size
+		shapes: etitiesShapes;
+		normalize: [ :anEntity | (model duplicationEntities at: anEntity) size ]."
 	etitiesShapes
 		@
 			(RSLabeled new
