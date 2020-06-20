@@ -1,6 +1,9 @@
 Class {
 	#name : #PWBMooseModelBrowserModel,
 	#superclass : #PWBAbstractModel,
+	#instVars : [
+		'contextMenuResult'
+	],
 	#category : #'PowerBuilderAnalyzeTool-ModelBrowser-Model'
 }
 

@@ -6,7 +6,9 @@ Class {
 		'searchField',
 		'allModelPWBObjectButton',
 		'scopedView',
-		'separator'
+		'separator',
+		'menu',
+		'millerModelPresenter'
 	],
 	#category : #'PowerBuilderAnalyzeTool-ModelBrowser-Browser'
 }
@@ -75,7 +77,15 @@ PWBMooseModelBrowser >> accept: anObject [
 { #category : #initialization }
 PWBMooseModelBrowser >> connectPresenters [
 	super connectPresenters.
-	self radioButtonsAction
+	self radioButtonsAction.
+	modelPresenter
+		whenSelectionChangedDo: [ :selected | 
+			model selected: (FamixTypeGroup withAll: modelPresenter selectedItems).
+			AbstractBrowserSenderMode actionFor: self.
+			menu defaultGroup menuItems removeAll.
+			self subMenu.
+			self needRebuild: false.
+			self buildWithSpec ]
 ]
 
 { #category : #accessing }
@@ -87,7 +97,7 @@ PWBMooseModelBrowser >> follow [
 PWBMooseModelBrowser >> followAction [
 	(self needUpdate: toSelect)
 		ifFalse: [ ^ self ].
-	modelPresenter roots: {toSelect}
+	modelPresenter items: {toSelect}
 	"self needRebuild: false.
 	self buildWithSpec"
 ]
@@ -108,15 +118,17 @@ PWBMooseModelBrowser >> initialize [
 ]
 
 { #category : #initialization }
+PWBMooseModelBrowser >> initializeMilerModelPresenter [
+	millerModelPresenter := SpMillerColumnPresenter new.
+	millerModelPresenter presenterBlock: [  ]
+]
+
+{ #category : #initialization }
 PWBMooseModelBrowser >> initializePresenters [
 	super initializePresenters.
 	model := PWBMooseModelBrowserModel new.
 	self initializeTable.
 	self initializeSearchField.
-	modelPresenter
-		whenSelectionChangedDo: [ :selected | 
-			model selected: (FamixTypeGroup withAll: modelPresenter selectedItems).
-			AbstractBrowserSenderMode actionFor: self ].
 	searchField whenTextIsAcceptedDo: [ :text | self searchFor: text ].
 	self viewRadioButton.
 	separator := self newLabel
@@ -136,13 +148,15 @@ PWBMooseModelBrowser >> initializeSearchField [
 
 { #category : #initialization }
 PWBMooseModelBrowser >> initializeTable [
+	menu := self newMenu.
 	modelPresenter := self newList.
 	modelPresenter
 		beMultipleSelection;
 		display: [ :item | item name ];
 		icons: [ :each | each systemIcon ];
 		sortingBlock: [ :a :b | a methods asSet size > b methods asSet size ];
-		enableItemSubstringFilter
+		enableItemSubstringFilter;
+		contextMenu: menu
 ]
 
 { #category : #'accessing ' }
@@ -187,6 +201,23 @@ PWBMooseModelBrowser >> setUp [
 	modelPresenter items: model pwbMooseModel asOrderedCollection.
 	self needRebuild: false.
 	self buildWithSpec
+]
+
+{ #category : #initialization }
+PWBMooseModelBrowser >> subMenu [
+	| pwbContextMenu |
+	modelPresenter selectedItems ifEmpty: [ ^ self newMenu ].
+	pwbContextMenu := AbstractPWBContextMenu
+		pwbContextMenu: modelPresenter selectedItems anyOne.
+	pwbContextMenu entities: modelPresenter selectedItems.
+	pwbContextMenu actions
+		do: [ :action | 
+			menu
+				addItem: [ :item | 
+					item
+						name: action asString;
+						action: [ pwbContextMenu perform: action ] ];
+				yourself ]
 ]
 
 { #category : #TOREMOVE }
