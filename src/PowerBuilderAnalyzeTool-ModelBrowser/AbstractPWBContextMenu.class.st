@@ -2,7 +2,8 @@ Class {
 	#name : #AbstractPWBContextMenu,
 	#superclass : #Object,
 	#instVars : [
-		'entities'
+		'entities',
+		'presenterModel'
 	],
 	#category : #'PowerBuilderAnalyzeTool-ModelBrowser-Browser'
 }
@@ -30,4 +31,14 @@ AbstractPWBContextMenu >> entities [
 { #category : #accessing }
 AbstractPWBContextMenu >> entities: anObject [
 	entities := anObject
+]
+
+{ #category : #accessing }
+AbstractPWBContextMenu >> presenterModel [
+	^ presenterModel
+]
+
+{ #category : #accessing }
+AbstractPWBContextMenu >> presenterModel: anObject [
+	presenterModel := anObject
 ]

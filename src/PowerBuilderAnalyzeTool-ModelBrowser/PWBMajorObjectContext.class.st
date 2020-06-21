@@ -16,5 +16,9 @@ PWBMajorObjectContext >> actions [
 
 { #category : #api }
 PWBMajorObjectContext >> methods [
-	self shouldBeImplemented.
+	presenterModel
+		presenterActionResult:
+			(entities
+				flatCollect: [ :entity | entity methods reject: #isPWBDead ]
+				as: Set)
 ]

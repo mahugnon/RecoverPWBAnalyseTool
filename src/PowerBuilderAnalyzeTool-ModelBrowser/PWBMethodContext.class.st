@@ -8,3 +8,13 @@ Class {
 PWBMethodContext class >> accept: anEntity [
 	^ anEntity isKindOf: FamixPWBBehavioral
 ]
+
+{ #category : #actions }
+PWBMethodContext >> actions [
+	^ {#variables . #browseDependencies}
+]
+
+{ #category : #menu }
+PWBMethodContext >> browseDependencies [
+
+]

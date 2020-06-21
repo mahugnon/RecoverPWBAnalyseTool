@@ -2,7 +2,7 @@ Class {
 	#name : #PWBMooseModelBrowserModel,
 	#superclass : #PWBAbstractModel,
 	#instVars : [
-		'contextMenuResult'
+		'presenterActionResult'
 	],
 	#category : #'PowerBuilderAnalyzeTool-ModelBrowser-Model'
 }
@@ -10,7 +10,22 @@ Class {
 { #category : #initialization }
 PWBMooseModelBrowserModel >> initialize [
 	super initialize.
-	pwbMooseModel := #()
+	pwbMooseModel := #().
+	presenterActionResult := #()
+]
+
+{ #category : #accessing }
+PWBMooseModelBrowserModel >> presenterActionResult [
+	^ presenterActionResult
+]
+
+{ #category : #accessing }
+PWBMooseModelBrowserModel >> presenterActionResult: anObject [
+	presenterActionResult := anObject.
+	pwbBrowser millerModelPresenter
+		addPresenter:
+			(pwbBrowser
+				initializePresenterFor: presenterActionResult asOrderedCollection)
 ]
 
 { #category : #accessing }
@@ -25,5 +40,6 @@ PWBMooseModelBrowserModel >> setUp [
 	liq_cal := (MooseModel root first allWithType: FamixPWBUserObject)
 		detect: [ :each | each name = 'uo_traitement_liq_cal' ].
 	pwbMooseModel := liq_cal allIncomingInvocationsSenders
-		asOrderedCollection
+		asOrderedCollection.
+	presenterActionResult := pwbMooseModel
 ]

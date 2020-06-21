@@ -56,7 +56,7 @@ PWBMooseModelBrowser class >> defaultSpec [
 					withConstraints: [ :contraint | contraint height: 20 ];
 				yourself)
 			withConstraints: [ :constraints | constraints height: self toolbarHeight ];
-		add: #modelPresenter;
+		add: #millerModelPresenter;
 		yourself
 ]
 
@@ -77,15 +77,7 @@ PWBMooseModelBrowser >> accept: anObject [
 { #category : #initialization }
 PWBMooseModelBrowser >> connectPresenters [
 	super connectPresenters.
-	self radioButtonsAction.
-	modelPresenter
-		whenSelectionChangedDo: [ :selected | 
-			model selected: (FamixTypeGroup withAll: modelPresenter selectedItems).
-			AbstractBrowserSenderMode actionFor: self.
-			menu defaultGroup menuItems removeAll.
-			self subMenu.
-			self needRebuild: false.
-			self buildWithSpec ]
+	self radioButtonsAction
 ]
 
 { #category : #accessing }
@@ -119,14 +111,41 @@ PWBMooseModelBrowser >> initialize [
 
 { #category : #initialization }
 PWBMooseModelBrowser >> initializeMilerModelPresenter [
-	millerModelPresenter := SpMillerColumnPresenter new.
-	millerModelPresenter presenterBlock: [  ]
+	millerModelPresenter := self instantiate: PWBSpMillerColumnPresenter.
+	millerModelPresenter
+		presenterBlock: [ :aModel | self initializePresenterFor: model presenterActionResult ]
+]
+
+{ #category : #initialization }
+PWBMooseModelBrowser >> initializePresenterFor: aCollection [
+	| listPresenter listPresenterMenu |
+	listPresenterMenu := self newMenu.
+	listPresenter := self newList.
+	listPresenter
+		items: aCollection;
+		beMultipleSelection;
+		display: [ :item | item name ];
+		icons: [ :each | each systemIcon ];
+		"sortingBlock: [ :a :b | a methods asSet size > b methods asSet size ];"
+			enableItemSubstringFilter;
+		contextMenu: listPresenterMenu.
+	listPresenter
+		whenSelectionChangedDo: [ :selected | 
+			model selected: (FamixTypeGroup withAll: listPresenter selectedItems).
+			AbstractBrowserSenderMode actionFor: self.
+			listPresenterMenu defaultGroup menuItems removeAll.
+			self subMenu: listPresenter.
+			self needRebuild: false.
+			self buildWithSpec ].
+	^ listPresenter
 ]
 
 { #category : #initialization }
 PWBMooseModelBrowser >> initializePresenters [
 	super initializePresenters.
 	model := PWBMooseModelBrowserModel new.
+	model pwbBrowser: self.
+	self initializeMilerModelPresenter.
 	self initializeTable.
 	self initializeSearchField.
 	searchField whenTextIsAcceptedDo: [ :text | self searchFor: text ].
@@ -156,12 +175,30 @@ PWBMooseModelBrowser >> initializeTable [
 		icons: [ :each | each systemIcon ];
 		sortingBlock: [ :a :b | a methods asSet size > b methods asSet size ];
 		enableItemSubstringFilter;
-		contextMenu: menu
+		contextMenu: menu.
+	modelPresenter
+		whenSelectionChangedDo: [ :selected | 
+			model selected: (FamixTypeGroup withAll: modelPresenter selectedItems).
+			AbstractBrowserSenderMode actionFor: self.
+			menu defaultGroup menuItems removeAll.
+			self subMenu.
+			self needRebuild: false.
+			self buildWithSpec ]
 ]
 
 { #category : #'accessing ' }
 PWBMooseModelBrowser >> isPropagate [
 	^ propagateButton state
+]
+
+{ #category : #accessing }
+PWBMooseModelBrowser >> millerModelPresenter [
+	^ millerModelPresenter
+]
+
+{ #category : #accessing }
+PWBMooseModelBrowser >> millerModelPresenter: anObject [
+	millerModelPresenter := anObject
 ]
 
 { #category : #accessing }
@@ -198,7 +235,8 @@ PWBMooseModelBrowser >> setModelPresenterSelection [
 { #category : #initialization }
 PWBMooseModelBrowser >> setUp [
 	model setUp.
-	modelPresenter items: model pwbMooseModel asOrderedCollection.
+	millerModelPresenter
+		setRootModel: model pwbMooseModel asOrderedCollection.
 	self needRebuild: false.
 	self buildWithSpec
 ]
@@ -210,9 +248,28 @@ PWBMooseModelBrowser >> subMenu [
 	pwbContextMenu := AbstractPWBContextMenu
 		pwbContextMenu: modelPresenter selectedItems anyOne.
 	pwbContextMenu entities: modelPresenter selectedItems.
+	pwbContextMenu presenterModel: model.
 	pwbContextMenu actions
 		do: [ :action | 
 			menu
+				addItem: [ :item | 
+					item
+						name: action asString;
+						action: [ pwbContextMenu perform: action ] ];
+				yourself ]
+]
+
+{ #category : #initialization }
+PWBMooseModelBrowser >> subMenu: aPresenter [
+	| pwbContextMenu |
+	aPresenter selectedItems ifEmpty: [ ^ self newMenu ].
+	pwbContextMenu := AbstractPWBContextMenu
+		pwbContextMenu: aPresenter selectedItems anyOne.
+	pwbContextMenu entities: aPresenter selectedItems.
+	pwbContextMenu presenterModel: model.
+	pwbContextMenu actions
+		do: [ :action | 
+			aPresenter contextMenu
 				addItem: [ :item | 
 					item
 						name: action asString;
