@@ -30,7 +30,8 @@ PWBMooseModelBrowserModel >> presenterActionResult: anObject [
 
 { #category : #accessing }
 PWBMooseModelBrowserModel >> selected: anEntity [
-	selected := anEntity
+	selected := anEntity.
+	AbstractBrowserSenderMode actionFor: pwbBrowser
 ]
 
 { #category : #initialization }

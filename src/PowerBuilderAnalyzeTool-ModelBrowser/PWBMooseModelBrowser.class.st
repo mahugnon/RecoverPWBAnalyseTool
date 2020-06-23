@@ -126,13 +126,12 @@ PWBMooseModelBrowser >> initializePresenterFor: aCollection [
 		beMultipleSelection;
 		display: [ :item | item name ];
 		icons: [ :each | each systemIcon ];
-		"sortingBlock: [ :a :b | a methods asSet size > b methods asSet size ];"
-			enableItemSubstringFilter;
+		sortingBlock: [ :a :b | a numberOfLinesOfCode > b numberOfLinesOfCode ];
+		enableItemSubstringFilter;
 		contextMenu: listPresenterMenu.
 	listPresenter
 		whenSelectionChangedDo: [ :selected | 
 			model selected: (FamixTypeGroup withAll: listPresenter selectedItems).
-			AbstractBrowserSenderMode actionFor: self.
 			listPresenterMenu defaultGroup menuItems removeAll.
 			self subMenu: listPresenter.
 			self needRebuild: false.
