@@ -27,7 +27,8 @@ PWBSourceTextBrowser >> accept: anObject [
 	^ {FamixPWBUserObject.
 	FamixPWBBehavioral.
 	DPFragmentLocation.
-	PowerbuliderLocation} includes: anObject class
+	PowerbuliderLocation}
+		anySatisfy: [ :class | anObject isKindOf: class ]
 ]
 
 { #category : #initialization }
