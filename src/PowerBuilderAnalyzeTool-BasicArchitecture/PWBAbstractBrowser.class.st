@@ -136,7 +136,9 @@ PWBAbstractBrowser >> model: anObject [
 
 { #category : #api }
 PWBAbstractBrowser >> needUpdate: anEntity [
-	^ anEntity anyOne ~= model selected
+	^ ((anEntity isKindOf: Collection)
+		ifTrue: [ anEntity anyOne ]
+		ifFalse: [ anEntity ]) ~= model selected
 		and: [ self accept: anEntity anyOne ]
 ]
 
