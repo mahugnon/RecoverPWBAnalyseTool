@@ -75,7 +75,7 @@ BaselineOfRecoverPWBAnalyseTool >> baselineOfPowerBuilderParser: spec [
 	spec
 		baseline: 'PowerBuilderParser'
 		with: [ spec
-				repository: 'github://moosetechnology/PowerBuilderParser:master/src' ]
+				repository: 'github://moosetechnology/PowerBuilderParser:master' ]
 ]
 
 { #category : #baselines }
