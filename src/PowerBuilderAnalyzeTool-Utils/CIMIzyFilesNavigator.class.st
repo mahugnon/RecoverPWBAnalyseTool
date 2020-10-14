@@ -94,6 +94,21 @@ CIMIzyFilesNavigator >> initializePresenters [
 ]
 
 { #category : #initialization }
+CIMIzyFilesNavigator >> initializeWindow: aWindowPresenter [
+	super initializeWindow: aWindowPresenter.
+	aWindowPresenter
+		whenClosedDo: [ self application windowClosed: aWindowPresenter ].
+	aWindowPresenter
+		title: self title;
+		initialExtent: 400 @ 300
+]
+
+{ #category : #initialization }
 CIMIzyFilesNavigator >> setItems [
 	listPresenter items: model bibliotheques asOrderedCollection
+]
+
+{ #category : #initialization }
+CIMIzyFilesNavigator >> title [
+^'Module source creator'
 ]
