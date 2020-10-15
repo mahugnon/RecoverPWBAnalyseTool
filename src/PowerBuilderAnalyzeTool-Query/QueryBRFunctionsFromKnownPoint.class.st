@@ -41,14 +41,16 @@ QueryBRFunctionsFromKnownPoint >> selectIncomingInvocationMethodsUntilConvergenc
 
 { #category : #running }
 QueryBRFunctionsFromKnownPoint >> selectIncomingInvocationMethodsUntilConvergence: aCollection [
-	| converge bRMethods |
-	converge := 0.
-	bRMethods := (aCollection flatCollectAsSet: #accessingMethods)
-		reject: [ :accessor | accessor isKindOf: FamixPWBmajorObject ].
-	[ converge = bRMethods size ]
-		whileFalse: [ converge := bRMethods size.
-			bRMethods := bRMethods
-				addAll: (bRMethods flatCollectAsSet: #invokingMethods) ].
-	^ (bRMethods reject: [ :behavioral | behavioral parentType isNil ])
-		sortDescending: [ :e | e numberOfLinesOfCode + e cyclomaticComplexity ]
+	| methods stop |
+	methods := ((aCollection
+		flatCollectAsSet: [ :e | e accessingMethods ])
+		reject: [ :e | e isPWBClass ]) asSet.
+	stop := 0.
+	[ stop = methods size ]
+		whileFalse: [ stop := methods size.
+			methods
+				addAll: (methods flatCollectAsSet: [ :m | m invokedMethods ]) ].
+	^ methods
+		select:
+			[ :behavioral | behavioral parentType isNotNil and: [ behavioral isFunction ] ]
 ]
